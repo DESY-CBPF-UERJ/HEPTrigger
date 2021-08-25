@@ -14,11 +14,13 @@ diretório onde os datasets estão.
 
 ``` const char dirname[48] = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files"; ```
 
-Altere com o caminho dos seus dados. Quanto a macro TriEffStudy.C, é necessário alterar a linha 67 (local onde o file.root de MC está)
-``` fChain->AddFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/MCttbar.root");``` 
-e linha 70 (local onde o file.root de dados está)
-```				fChain->AddFile("/eos/home-c/ckoraka/for_running_trigger_SFs_with_lepton-PU/2017/converted/MET_2017.root"); ```
-Feito essas alterações, as macros estão prontas para serem executadas.
+Altere com o caminho dos seus dados. Quanto a macro TriEffStudy.C, é necessário alterar a linha 67 e 70
+
+``` 
+fChain->AddFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/MCttbar.root");      #file.root de MC
+fChain->AddFile("/eos/home-c/ckoraka/for_running_trigger_SFs_with_lepton-PU/2017/converted/MET_2017.root"); #file.root de Data 
+```
+Coloque neles onde se encontram seus file.root que serão gerados pelo conversion.C.Feito essas alterações, as macros estão prontas para serem executadas.
 # Executando as macros
 Há uma ordem que deve ser seguida na execução das macros, sendo ela Conversion.C->TrigEffStudy.C. Para rodar a macro Conversion.C, execute no terminal a seguinte
 linha``` root Conversion.C```
