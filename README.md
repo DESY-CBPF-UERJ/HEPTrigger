@@ -66,7 +66,7 @@ _NPVHIGH = Eventos com 30 ou mais vértices primários.
 _METSLOW = Eventos com 150 ou mais GeV no MET.
 _METHIGH = Eventos com menos de 150 GeV no MET.
 
-A macro cria diversos histogramas para cada classificação e suas possíveis combinações de sufixo, totalizando 43 possíveis classificações. E para cada uma dessas 43 possíbilidades ele salva a informação do:
+A macro cria diversos histogramas para cada classificação e suas possíveis combinações de sufixo, totalizando 42 possíveis classificações, o HLT_allMET vai ter uma versão para cada um desses 42, contudo ele não utiliza os mesmos sufixos. Ele também salva as seguintes variáveis para cada classificação:
 
 _el0_pt = Momento do leading elétron
 _el1_pt = Momento do subleading elétron
@@ -99,4 +99,6 @@ _el0_eta_vs_el1_eta = relação entre a pseudo-rapidez do leading e subleading e
 _mu0_pt_vs_el0_pt = relação entre a distribuição do momento do leading elétron e leading múon
 _mu0_eta_vs_el0_eta = elação entre a pseudo-rapidez do leading eletron e leading múon
 ```
-Por exemplo, se acesso na tree uma variável chamada "h_HLT_DoubleMu_OR_NPHIGH_el0_pt" esperamos ver toda a distribuição do momento do leading elétron quando o evento passou por trigger do canal mumu, contém 2 múon e zero elétrons, além de ter 3 ou mais jatos. Sendo assim esperamos que essa distribuição esteja vazia, o que de fato acontece. 
+Utilizando essas classificações o trigEffStudy.C salva em um novo file.root contendo todos esses histogramas. Ele também calcula a eficiência de trigger dividindo os eventos que passaram pelos triggers dos canais (mumu,ee ou emu) e trigers de MET, pelos eventos que passaram somente pelos triggers de MET, salvando tudo no file.root.
+
+================================================================EM CONSTRUÇÂO ==============================================================================
