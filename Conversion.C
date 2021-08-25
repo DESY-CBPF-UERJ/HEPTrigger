@@ -59,13 +59,13 @@ void list_files(vector<int> *ch1,const char *dirname="/home/matheus/Desktop/TCha
 
 
 vector<int> index;
-TChain ch1("selection"); 												   //Crio um Tchain chamado ch1, por onde vou adcionar todas as outras trees, usando o list_files
+const char dirname[48] = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files";
+TChain ch1("selection",dirname); 												   //Crio um Tchain chamado ch1, por onde vou adcionar todas as outras trees, usando o list_files
 list_files(&index);														   //Pego os 100 tree.root separados entre as pastas e junto eles aqui na minha Tchain.
 
 std::cout<<index.size()<<endl;
 
-
-std::string str = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files";
+std::string str = dirname;
  std::string str_2;
 for(int i = 0;i<index.size();i++){
      //char numstr[40];
