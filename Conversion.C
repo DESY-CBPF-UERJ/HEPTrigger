@@ -16,7 +16,7 @@
 //Tentando pegar informação dos arquivos nas pastas do TTTo2L2Nu_16_?_?, onde ? varia de 0 a 100
 //void list_files(const char *dirname="/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files", const char *ext="Tree.root") // https://root-forum.cern.ch/t/open-files-in-a-directory-with-a-for-loop/12471
 //void list_files(TChain *ch1,const char *dirname="/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files", const char *ext="Tree.root")
-void list_files(vector<int> *ch1,const char *dirname="/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files", const char *ext="Tree.root")
+void list_files(vector<int> *ch1,const char *dirname, const char *ext="Tree.root")
 
 {
 	int n = 9999;
@@ -60,8 +60,8 @@ void list_files(vector<int> *ch1,const char *dirname="/home/matheus/Desktop/TCha
 
 vector<int> index;
 const char dirname[48] = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files";
-TChain ch1("selection",dirname); 												   //Crio um Tchain chamado ch1, por onde vou adcionar todas as outras trees, usando o list_files
-list_files(&index);														   //Pego os 100 tree.root separados entre as pastas e junto eles aqui na minha Tchain.
+TChain ch1("selection"); 												   //Crio um Tchain chamado ch1, por onde vou adcionar todas as outras trees, usando o list_files
+list_files(&index,dirname);														   //Pego os 100 tree.root separados entre as pastas e junto eles aqui na minha Tchain.
 
 std::cout<<index.size()<<endl;
 
