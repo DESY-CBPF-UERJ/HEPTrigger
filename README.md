@@ -11,6 +11,7 @@ git clone https://github.com/DESY-CBPF-UERJ/HEPTrigger.git
 
 O framework consiste de duas macros (conversion.C e TrigEffStudy.C), somente é necessário alterar o conversion.C, na linha 62, onde é delcrado o char com o
 diretório onde os datasets estão.
+
 ``` const char dirname[48] = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files"; ```
 
 #Rodando as macros
