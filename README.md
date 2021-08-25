@@ -23,6 +23,7 @@ Os seguintes avisos são comuns
 Warning in <TFile::Init>: no keys recovered, file has been made a Zombie
 ```
 Ao final da execução você deve ter, além dos warnings, um output parecido com
+```
 95
 Numero de eventos: 242422
 ```
