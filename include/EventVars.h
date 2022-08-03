@@ -30,32 +30,45 @@ struct EventVars{
 
   explicit EventVars(){ };
  
+    int RecoLepID;
 
+    bool Lep_triggers;
+    bool Met_triggers;
+    bool HLT_IsoMu24_ ;
+    bool HLT_IsoTkMu24_;
+    bool HLT_Mu50_;
+    bool HLT_IsoMu27_;
+    bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_;
+    bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_;
+    bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_;
+    bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_;
+    bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_;
+    bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_;
+    bool HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_;
+    bool HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_;
+    bool HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_;
+    bool HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_;
+    bool HLT_Ele27_WPTight_Gsf_;
+    bool HLT_Ele115_CaloIdVT_GsfTrkIdT_;
+    bool HLT_Ele32_WPTight_Gsf_;
+    bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_;
+    bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_;
+    bool HLT_DoubleEle33_CaloIdL_MW_;
+    bool HLT_PFMET300_;
+    bool HLT_MET200_;
+    bool HLT_PFHT300_PFMET110_;
+    bool HLT_PFMET170_HBHECleaned_;
+    bool HLT_PFMET120_PFMHT120_IDTight_;
+    bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_;
+    bool HLT_PFMET200_HBHECleaned_;
+    bool HLT_PFMET200_HBHE_BeamHaloCleaned_;
+    bool HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned_;
+    bool HLT_PFMET120_PFMHT120_IDTight_PFHT60_;
+    bool HLT_PFHT500_PFMET100_PFMHT100_IDTight_;
+    bool HLT_PFHT700_PFMET85_PFMHT85_IDTight_;
+    bool HLT_PFHT800_PFMET75_PFMHT75_IDTight_;
+    bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60_;
 
-
-  bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ;             ////
-  bool HLT_Ele115_CaloIdVT_GsfTrkIdT;                         ////
-  bool HLT_PFMET300 ;
-  bool HLT_MET200 ;
-  bool HLT_PFHT300_PFMET110;
-  bool HLT_PFMET170_HBHECleaned;
-  bool HLT_PFMET120_PFMHT120_IDTight ;
-  bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight;
-
-
-  bool HLT_Ele27_WPTight_Gsf;
-  bool HLT_IsoTkMu24;
-  bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL;
-  bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ;
-  bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ;
-
-
-  bool HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL ;
-  bool HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ;
-  bool HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL ;
-  bool HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ ; 
-  bool HLT_IsoMu24;
-  bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL ;
 
 
 
@@ -112,36 +125,46 @@ typedef std::vector<EventVars> vEventVars;
 
 void EventVars::initialize(){
 
+    RecoLepID = 0;
 
+    Lep_triggers = false;
+    Met_triggers = false;
+    HLT_IsoMu24_ = false; 
+    HLT_IsoTkMu24_= false; 
+    HLT_Mu50_= false; 
+    HLT_IsoMu27_= false; 
+    HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_= false; 
+    HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_= false; 
+    HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_= false; 
+    HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_= false; 
+    HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_= false; 
+    HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_= false; 
+    HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_= false; 
+    HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_= false; 
+    HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_= false; 
+    HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_= false; 
+    HLT_Ele27_WPTight_Gsf_= false; 
+    HLT_Ele115_CaloIdVT_GsfTrkIdT_= false; 
+    HLT_Ele32_WPTight_Gsf_= false; 
+    HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_= false; 
+    HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_= false; 
+    HLT_DoubleEle33_CaloIdL_MW_= false; 
+    HLT_PFMET300_= false; 
+    HLT_MET200_= false; 
+    HLT_PFHT300_PFMET110_= false; 
+    HLT_PFMET170_HBHECleaned_= false; 
+    HLT_PFMET120_PFMHT120_IDTight_= false; 
+    HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_= false; 
+    HLT_PFMET200_HBHECleaned_= false; 
+    HLT_PFMET200_HBHE_BeamHaloCleaned_= false; 
+    HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned_= false; 
+    HLT_PFMET120_PFMHT120_IDTight_PFHT60_= false; 
+    HLT_PFHT500_PFMET100_PFMHT100_IDTight_= false; 
+    HLT_PFHT700_PFMET85_PFMHT85_IDTight_= false; 
+    HLT_PFHT800_PFMET75_PFMHT75_IDTight_= false; 
+    HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60_= false; 
 
-  
-
-//Triggers do Eletron
-  HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = false;                  ///
-  HLT_Ele115_CaloIdVT_GsfTrkIdT = false;                              ///
-  HLT_Ele27_WPTight_Gsf = false;
-//TRiggers do Muon
-  HLT_IsoTkMu24 =false;
-  HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL = false;
-  HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ = false;
-  HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ = false;
-//Triggers do MET
-  HLT_PFMET300 = false;
-  HLT_MET200 = false;
-  HLT_PFHT300_PFMET110 = false;
-  HLT_PFMET170_HBHECleaned = false;
-  HLT_PFMET120_PFMHT120_IDTight = false;
-  HLT_PFMETNoMu120_PFMHTNoMu120_IDTight = false;
-//Triggers dos ElMu
-  HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL = false ;
-  HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = false;
-  HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL = false;
-  HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ = false; 
-  HLT_IsoMu24 = false;
-  HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL = false;
-
-  //gSystem->cd("/home/matheus/Desktop/TChain/");
-   passMETFilters = false;
+    passMETFilters = false;
 
 //////////////////////////////////////////////////////
   evtWeight = 0;

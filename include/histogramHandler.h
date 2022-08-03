@@ -26,7 +26,7 @@
 #include <iomanip>      // std::setprecision
 #include <sstream>
 
-void fillHistogramsByStream(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string nameHLT, string filename, string stream="")
+void fillHistogramsByStream(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string nameHLT, string filename, string stream="",bool N_eff= false)
 {
 
 	// initialization
@@ -49,12 +49,31 @@ void fillHistogramsByStream(leptonHandler lepTool, jetMetHandler jetMetTool, TOb
 	double evtWeight = 1.;
 
 	if (lepTool.isMC) {
+		// evtWeight = 1;
 		evtWeight = jetMetTool.evtWeight;
+		if (N_eff){
+			evtWeight = evtWeight*evtWeight;
+		}
 	}
 	// totalWeight*=lepSF;
 	// totalWeight*=pileup_SF;
+	//std::cout<<"Peso "<<evtWeight<<std::endl;
+	//totalWeight=1;
+	//if(totalWeight==0){
+	//	std::cout<<"uepa"<<std::endl;
+	//}
+	//if(evtWeight < 0){
+	//	evtWeight = 0;
+	//}
+	//totalWeight=evtWeight;
 	totalWeight=evtWeight;
 
+	
+	
+
+	// std::cout<<"###################################################################################"<<std::endl;
+	// std::cout<<"Histograma: "<<stream<<std::endl;
+	// std::cout<<"Com peso: "<<totalWeight<<std::endl;
 	// cout<<"lepSF: "<<lepSF<<" pileup_SF: "<<pileup_SF<<" genWeight: "<<genWeight<<endl;
 	// cout<<"TotalWeight: "<<totalWeight<<endl; 
 	//std::cout<<"totalWeight = "<<totalWeight<<std::endl;
@@ -73,7 +92,6 @@ void fillHistogramsByStream(leptonHandler lepTool, jetMetHandler jetMetTool, TOb
 	//std::cout << "FILL\t" <<("h_" + nameHLT + stream + "_el0_pt").c_str() << std::endl;
 	h0 = (TH1D*)array->FindObject( ("h_" + nameHLT + stream + "_el0_pt").c_str() );
 	h0->Fill( lepTool.leadPt_el, totalWeight );
-
 
 	h0 = (TH1D*)array->FindObject( ("h_" + nameHLT + stream + "_el1_pt").c_str() );
 	h0->Fill( lepTool.subPt_el, totalWeight );
@@ -158,68 +176,68 @@ void fillHistogramsByStream(leptonHandler lepTool, jetMetHandler jetMetTool, TOb
 	return;
 }
 
-void fillEfficiencyHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string nameHLT, string filename, bool splitStreams=false)
+void fillEfficiencyHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string nameHLT, string filename, bool splitStreams=false, bool N_eff = false)
 {
 	//cout << "fillEfficiencyHistograms()" << endl;
-	fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename);
+	fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename,"", N_eff);
 
 	// fill histograms separated by stream if necessary --> should be needed for denominator in efficiency calculations
 	if (splitStreams) {
-		if ( lepTool.passSLCuts_el && jetMetTool.passSLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamSL");
-		if ( lepTool.passSLCuts_mu && jetMetTool.passSLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamSL");
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL");
+		if ( lepTool.passSLCuts_el && jetMetTool.passSLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamSL",N_eff);
+		if ( lepTool.passSLCuts_mu && jetMetTool.passSLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamSL",N_eff);
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL",N_eff);
 
 		//Charis : Added the below histogramms so that no need to run multiple times for systematics derivation
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_njetshigh");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_njetshigh");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_njetshigh");
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_njetslow");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_njetslow");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_njetslow");
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_njetshigh",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_njetshigh",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_njetshigh",N_eff);
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_njetslow",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_njetslow",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNjetsCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_njetslow",N_eff);
 
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_npvhigh");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_npvhigh");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_npvhigh");
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_npvlow");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_npvlow");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_npvlow");
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_npvhigh",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_npvhigh",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_npvhigh",N_eff);
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_npvlow",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_npvlow",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passNPVCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_npvlow",N_eff);
 
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_methigh");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_methigh");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_methigh");
-		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_metlow");
-		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_metlow");
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_metlow");
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_methigh",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_methigh",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_methigh",N_eff);
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_metlow",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_metlow",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_metlow",N_eff);
 
 
   }
 }
 
-void fillStackHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string nameHLT, string sample)
+void fillStackHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string nameHLT, string sample, bool N_eff)
 {
 	//cout << "fillEfficiencyHistograms()" << endl;
-	fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, sample);
-	if ( jetMetTool.nJets == 2 && jetMetTool.nBTags == 1) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_2j1b").c_str() );
-	if ( jetMetTool.nJets == 2 && jetMetTool.nBTags == 2) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_2j2b").c_str() );
-	if ( jetMetTool.nJets == 3 && jetMetTool.nBTags == 1) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_3j1b").c_str() );
-	if ( jetMetTool.nJets == 3 && jetMetTool.nBTags == 2) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_3j2b").c_str() );
-	if ( jetMetTool.nJets == 3 && jetMetTool.nBTags == 3) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_3j3b").c_str() );
-	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags == 1) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j1b").c_str() );
-	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags == 2) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j2b").c_str() );
-	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags == 3) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j3b").c_str() );
-	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags >= 4) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j4b").c_str() );
+	fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, sample,N_eff);
+	if ( jetMetTool.nJets == 2 && jetMetTool.nBTags == 1) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_2j1b").c_str() ,N_eff);
+	if ( jetMetTool.nJets == 2 && jetMetTool.nBTags == 2) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_2j2b").c_str() ,N_eff);
+	if ( jetMetTool.nJets == 3 && jetMetTool.nBTags == 1) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_3j1b").c_str() ,N_eff);
+	if ( jetMetTool.nJets == 3 && jetMetTool.nBTags == 2) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_3j2b").c_str() ,N_eff);
+	if ( jetMetTool.nJets == 3 && jetMetTool.nBTags == 3) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_3j3b").c_str() ,N_eff);
+	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags == 1) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j1b").c_str() ,N_eff);
+	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags == 2) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j2b").c_str() ,N_eff);
+	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags == 3) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j3b").c_str() ,N_eff);
+	if ( jetMetTool.nJets >= 4 && jetMetTool.nBTags >= 4) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, sample, (sample + "_4j4b").c_str() ,N_eff);
 }
 
-void fillStackHistogramsByChannel(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string sample)
+void fillStackHistogramsByChannel(leptonHandler lepTool, jetMetHandler jetMetTool, TObjArray* array, string sample,bool N_eff = false)
 {
 	// *** 1. Dilepton, ee
-	if ((lepTool.passSLtriggers_el || lepTool.passDLtriggers_el) && lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts) fillStackHistograms(lepTool, jetMetTool, array, "eeChannel", sample);
+	if ((lepTool.passSLtriggers_el || lepTool.passDLtriggers_el) && lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts) fillStackHistograms(lepTool, jetMetTool, array, "eeChannel", sample,N_eff);
 	// *** 2. Dilepton, mumu
-	if ((lepTool.passSLtriggers_mu || lepTool.passDLtriggers_mu) && lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts) fillStackHistograms(lepTool, jetMetTool, array, "mumuChannel", sample);
+	if ((lepTool.passSLtriggers_mu || lepTool.passDLtriggers_mu) && lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts) fillStackHistograms(lepTool, jetMetTool, array, "mumuChannel", sample,N_eff);
 	// *** 3. Dilepton, emu
-	if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts) fillStackHistograms(lepTool, jetMetTool, array, "emuChannel", sample);
+	if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts) fillStackHistograms(lepTool, jetMetTool, array, "emuChannel", sample,N_eff);
 }
 
 
@@ -239,16 +257,168 @@ void init2DCorrelationHistograms(TObjArray* array, string nameHLT)
 
 }
 
-void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream="")
+void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream="", int era = 0)
 {
+	
+	//Essa variaveis vão ser usadas para criar os const int dos bins
+	Int_t index_lea_mumu = 0,index_sub_mumu=0,index_lea_elel=0,index_sub_elel=0,index_ele_elmu=0,index_mu_elmu=0;
+
+	if (era == 2018 || era == 2016){
+		index_lea_mumu = 4;
+		index_sub_mumu = 2;
+		index_lea_elel = 4;
+		index_sub_elel = 2;
+		index_ele_elmu = 4;
+		index_mu_elmu = 4;
+	}
+
+	if (era == 2017){
+		index_lea_mumu = 4;
+		index_sub_mumu = 3;
+		index_lea_elel = 4;
+		index_sub_elel = 3;
+		index_ele_elmu = 4;
+		index_mu_elmu = 4;
+	}
+
+	// if(era == 2016){
+	const Int_t nbins_Neff_2D_SubElEl = index_sub_elel;
+	Double_t edges_nbins_Neff_2D_SubElEl[nbins_Neff_2D_SubElEl + 1];
+
+	const Int_t nbins_Neff_2D_LeaElEl = index_lea_elel;
+	Double_t edges_nbins_Neff_2D_LeaElEl[nbins_Neff_2D_LeaElEl + 1];
+
+
+		//Vou colocar bins diferentes para cada CANAl
+	const Int_t nbins_Neff_2D_SubMuMu = index_sub_mumu;
+	Double_t edges_nbins_Neff_2D_SubMuMu[nbins_Neff_2D_SubMuMu + 1];
+
+	const Int_t nbins_Neff_2D_LeaMuMu = index_lea_mumu;	
+	Double_t edges_nbins_Neff_2D_LeaMuMu[nbins_Neff_2D_LeaMuMu + 1];
+
+
+	//Vou colocar bins diferentes para cada CANAl
+	const Int_t nbins_Neff_2D_SubElMu = index_ele_elmu;
+	Double_t edges_nbins_Neff_2D_SubElMu[nbins_Neff_2D_SubElMu + 1];
+
+	const Int_t nbins_Neff_2D_LeaElMu = index_mu_elmu;
+	Double_t edges_nbins_Neff_2D_LeaElMu[nbins_Neff_2D_LeaElMu + 1];
+
+
+
+
+
+
+	//Colocando os bins corretos para cada ano!
+	if (era == 2018 || era == 2016){
+		// CANAL MUMU
+		edges_nbins_Neff_2D_SubMuMu[0] = {20.0};
+		edges_nbins_Neff_2D_SubMuMu[1] = {25.0};
+		edges_nbins_Neff_2D_SubMuMu[2] = {200.0};
+		edges_nbins_Neff_2D_LeaMuMu[0] = {40.0};
+		edges_nbins_Neff_2D_LeaMuMu[1] = {60.0};
+		edges_nbins_Neff_2D_LeaMuMu[2] = {80.0};
+		edges_nbins_Neff_2D_LeaMuMu[3] = {100.0};
+		edges_nbins_Neff_2D_LeaMuMu[4] = {200.0};
+		//CANAL ELEL
+		edges_nbins_Neff_2D_SubElEl[0]={20};
+		edges_nbins_Neff_2D_SubElEl[1]={35};
+		edges_nbins_Neff_2D_SubElEl[2]={200};
+		edges_nbins_Neff_2D_LeaElEl[0]={40};
+		edges_nbins_Neff_2D_LeaElEl[1]={60};
+		edges_nbins_Neff_2D_LeaElEl[2]={80};
+		edges_nbins_Neff_2D_LeaElEl[3]={100};
+		edges_nbins_Neff_2D_LeaElEl[4]={200};
+		//CANAL ELMu-> DESNECESSARIO UMA VEZ QUE SAO IGUAIS PARA TODOS OS ANOS. MANTIVE CASO SEJA NECESSARIO USAR
+		edges_nbins_Neff_2D_SubElMu[0]={20};
+		edges_nbins_Neff_2D_SubElMu[1]={30};
+		edges_nbins_Neff_2D_SubElMu[2]={40};
+		edges_nbins_Neff_2D_SubElMu[3]={60};
+		edges_nbins_Neff_2D_SubElMu[4]={200};
+		edges_nbins_Neff_2D_LeaElMu[0]={20};
+		edges_nbins_Neff_2D_LeaElMu[1]={30};
+		edges_nbins_Neff_2D_LeaElMu[2]={40};
+		edges_nbins_Neff_2D_LeaElMu[3]={60};
+		edges_nbins_Neff_2D_LeaElMu[4]={200};
+
+	}
+
+	if (era == 2017){
+		// CANAL MUMU
+		edges_nbins_Neff_2D_SubMuMu[0] = {20.0};
+		edges_nbins_Neff_2D_SubMuMu[1] = {25.0};
+		edges_nbins_Neff_2D_SubMuMu[2] = {30.0};
+		edges_nbins_Neff_2D_SubMuMu[3] = {200.0};
+		edges_nbins_Neff_2D_LeaMuMu[0] = {40.0};
+		edges_nbins_Neff_2D_LeaMuMu[1] = {60.0};
+		edges_nbins_Neff_2D_LeaMuMu[2] = {80.0};
+		edges_nbins_Neff_2D_LeaMuMu[3] = {100.0};
+		edges_nbins_Neff_2D_LeaMuMu[4] = {200.0};
+		//CANAL ELEL
+		edges_nbins_Neff_2D_SubElEl[0]={20};
+		edges_nbins_Neff_2D_SubElEl[1]={40};
+		edges_nbins_Neff_2D_SubElEl[2]={60};
+		edges_nbins_Neff_2D_SubElEl[3]={200};
+		edges_nbins_Neff_2D_LeaElEl[0]={40}; //40
+		edges_nbins_Neff_2D_LeaElEl[1]={60}; //60
+		edges_nbins_Neff_2D_LeaElEl[2]={80}; //80
+		edges_nbins_Neff_2D_LeaElEl[3]={100}; //100
+		edges_nbins_Neff_2D_LeaElEl[4]={200}; //200
+		//CANAL ELMu-> DESNECESSARIO UMA VEZ QUE SAO IGUAIS PARA TODOS OS ANOS. MANTIVE CASO SEJA NECESSARIO USAR
+		edges_nbins_Neff_2D_SubElMu[0]={20};
+		edges_nbins_Neff_2D_SubElMu[1]={30};
+		edges_nbins_Neff_2D_SubElMu[2]={40};
+		edges_nbins_Neff_2D_SubElMu[3]={60};
+		edges_nbins_Neff_2D_SubElMu[4]={200};
+		edges_nbins_Neff_2D_LeaElMu[0]={20};
+		edges_nbins_Neff_2D_LeaElMu[1]={30};
+		edges_nbins_Neff_2D_LeaElMu[2]={40};
+		edges_nbins_Neff_2D_LeaElMu[3]={60};
+		edges_nbins_Neff_2D_LeaElMu[4]={200};
+
+	}
+	
+	
+	
+	
 	// Leading electron pT
 
 	// === 09-18-18 (bin optimization) ===
 	const Int_t nbins_subleadPt_2D = 3;
+	// const Int_t nbins_subleadPt_2D = 1;     // GILSON
 	Double_t edges_subleadPt_2D[nbins_subleadPt_2D + 1] = {20.0, 50.0, 90.0, 200.0};
+	
+	// // if(era == 2016){
+	// const Int_t nbins_Neff_2D_SubElEl = 3;
+	// Double_t edges_nbins_Neff_2D_SubElEl[4] = {20.0,40,60, 200.0};
+
+	// const Int_t nbins_Neff_2D_LeaElEl = 4;
+	// Double_t edges_nbins_Neff_2D_LeaElEl[nbins_Neff_2D_LeaElEl + 1] = {40,60,80,100,200};
+
+
+	// 	//Vou colocar bins diferentes para cada CANAl
+	// const Int_t nbins_Neff_2D_SubMuMu = 3;
+	// Double_t edges_nbins_Neff_2D_SubMuMu[nbins_Neff_2D_SubMuMu + 1] = {20.0, 25.0,30, 200.0};
+
+	// const Int_t nbins_Neff_2D_LeaMuMu = 4;	
+	// Double_t edges_nbins_Neff_2D_LeaMuMu[nbins_Neff_2D_LeaMuMu + 1] = {40,60,80,100,200};
+
+
+	// //Vou colocar bins diferentes para cada CANAl
+	// const Int_t nbins_Neff_2D_SubElMu = 4;
+	// Double_t edges_nbins_Neff_2D_SubElMu[nbins_Neff_2D_SubElMu + 1] = {20.0, 30.0, 40.0,60, 200.0};
+
+	// const Int_t nbins_Neff_2D_LeaElMu = 4;
+	// Double_t edges_nbins_Neff_2D_LeaElMu[nbins_Neff_2D_LeaElMu + 1] = {20,30,40,60,200};
+
+
+	
+
+
 	// === 09-13-18 (bin optimization) ===
 	const Int_t nbins_pt_2D = 4;
-	Double_t edges_pt_2D[nbins_pt_2D + 1] = {20.0, 50.0, 80.0, 120.0, 200.0};
+	//Double_t edges_pt_2D[nbins_pt_2D + 1] = {20.0, 50.0, 80.0, 120.0, 200.0};
+	Double_t edges_pt_2D[nbins_pt_2D + 1] = {40.0, 60.0, 80.0, 120.0, 200.0};
 	// === 09-11-18 (matching AN2016_392) ===
 	const Int_t nbins_pt = 6;
 	Double_t edges_pt[nbins_pt + 1] = {20.0, 30.0, 40.0, 60.0, 80.0, 100.0, 200.0};
@@ -260,28 +430,35 @@ void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream=
 	//Double_t edges_pt[nbins_pt + 1] = {20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0, 110.0, 120.0, 130.0, 140.0, 150.0, 160.0, 170.0, 180.0, 190.0, 200.0, 210.0, 220.0, 230.0, 240.0, 250.0, 260.0, 270.0, 280.0, 300.0};
 
 	//std::cout << "INIT\t" << ("h_" + nameHLT + stream + "_el0_pt").c_str() << std::endl;
-	TH1D* h_el0_pt = new TH1D( ("h_" + nameHLT + stream + "_el0_pt").c_str(),  ("h_" + nameHLT + stream + "_el0_pt").c_str(), nbins_pt, edges_pt );
+	TH1D* h_el0_pt = new TH1D( ("h_" + nameHLT + stream + "_el0_pt").c_str(),  ("h_" + nameHLT + stream + "_el0_pt").c_str(), nbins_Neff_2D_LeaElEl, edges_nbins_Neff_2D_LeaElEl );
 	h_el0_pt->SetXTitle("Leading Electron p_{T} [GeV]");
 	h_el0_pt->SetYTitle("Entries / Bin");
-	TH1D* h_el1_pt = new TH1D( ("h_" + nameHLT + stream + "_el1_pt").c_str(),  ("h_" + nameHLT + stream + "_el1_pt").c_str(), nbins_pt, edges_pt );
+	TH1D* h_el1_pt = new TH1D( ("h_" + nameHLT + stream + "_el1_pt").c_str(),  ("h_" + nameHLT + stream + "_el1_pt").c_str(), nbins_Neff_2D_SubElEl, edges_nbins_Neff_2D_SubElEl );
 	h_el1_pt->SetXTitle("Sub-Leading Electron p_{T} [GeV]");
 	h_el1_pt->SetYTitle("Entries / Bin");
 
-	TH1D* h_mu0_pt = new TH1D( ("h_" + nameHLT + stream + "_mu0_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt").c_str(), nbins_pt, edges_pt );
+	TH1D* h_mu0_pt = new TH1D( ("h_" + nameHLT + stream + "_mu0_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt").c_str(), nbins_Neff_2D_LeaMuMu, edges_nbins_Neff_2D_LeaMuMu );
 	h_mu0_pt->SetXTitle("Leading Muon p_{T} [GeV]");
 	h_mu0_pt->SetYTitle("Entries / Bin");
-	TH1D* h_mu1_pt = new TH1D( ("h_" + nameHLT + stream + "_mu1_pt").c_str(),  ("h_" + nameHLT + stream + "_mu1_pt").c_str(), nbins_pt, edges_pt );
+	TH1D* h_mu1_pt = new TH1D( ("h_" + nameHLT + stream + "_mu1_pt").c_str(),  ("h_" + nameHLT + stream + "_mu1_pt").c_str(), nbins_Neff_2D_SubMuMu, edges_nbins_Neff_2D_SubMuMu );
 	h_mu1_pt->SetXTitle("Sub-Leading Muon p_{T} [GeV]");
 	h_mu1_pt->SetYTitle("Entries / Bin");
 
 	// Leading electron eta
 	// === 09-18-18 (bin optimization) ===
-	const Int_t nbins_EtaByEta_2D = 2;
-	Double_t edges_EtaByEta_2D[nbins_EtaByEta_2D + 1] = {0, 1.2, 2.4};
-	const Int_t nbins_eta_2D = 4;
-	Double_t edges_eta_2D[nbins_eta_2D + 1] = {0, 0.4, 0.9, 1.5, 2.4};
-	const Int_t nbins_subleadEta_2D = 3;
-	Double_t edges_subleadEta_2D[nbins_eta_2D + 1] = {0, 0.4, 0.9, 2.4};
+	//const Int_t nbins_EtaByEta_2D = 2;
+	const Int_t nbins_EtaByEta_2D = 3;									   // GILSON
+	//Double_t edges_EtaByEta_2D[nbins_EtaByEta_2D + 1] = {0, 1.2, 2.4};
+	Double_t edges_EtaByEta_2D[nbins_EtaByEta_2D + 1] = {0,0.5,1.5,2.4};   // GILSON
+	//const Int_t nbins_eta_2D = 4;
+	//Double_t edges_eta_2D[nbins_eta_2D + 1] = {0, 0.4, 0.9, 1.5, 2.4};
+	//const Int_t nbins_subleadEta_2D = 3;
+	//Double_t edges_subleadEta_2D[nbins_eta_2D + 1] = {0, 0.4, 0.9, 2.4};
+	const Int_t nbins_eta_2D = 3;											// GILSON
+	Double_t edges_eta_2D[nbins_eta_2D + 1] = {0,0.5,1.5,2.4};				// GILSON
+	const Int_t nbins_subleadEta_2D = 3;									// GILSON
+	Double_t edges_subleadEta_2D[nbins_eta_2D + 1] = {0,0.5,1.5,2.4};		// GILSON
+
 	// === 09-13-18 (bin optimization) ===
 	//const Int_t nbins_eta_2D = 5;
 	//Double_t edges_eta_2D[nbins_eta_2D + 1] = {0, 0.4, 0.9, 1.2, 1.8, 2.4};
@@ -395,7 +572,8 @@ void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream=
 	TH2D* h_el0_eta_vs_el1_eta = new TH2D( ("h_" + nameHLT + stream + "_el0_eta_vs_el1_eta").c_str(),  ("h_" + nameHLT + stream + "_el0_eta_vs_el1_eta").c_str(), nbins_EtaByEta_2D, edges_EtaByEta_2D, nbins_EtaByEta_2D, edges_EtaByEta_2D );
 	h_el0_eta_vs_el1_eta->SetXTitle("Leading Electron |#eta|");
 	h_el0_eta_vs_el1_eta->SetYTitle("Sub-Leading Electron |#eta|");
-	TH2D* h_el0_pt_vs_el1_pt = new TH2D( ("h_" + nameHLT + stream + "_el0_pt_vs_el1_pt").c_str(),  ("h_" + nameHLT + stream + "_el0_pt_vs_el1_pt").c_str(), nbins_subleadPt_2D, edges_subleadPt_2D, nbins_subleadPt_2D, edges_subleadPt_2D );
+	//TH2D* h_el0_pt_vs_el1_pt = new TH2D( ("h_" + nameHLT + stream + "_el0_pt_vs_el1_pt").c_str(),  ("h_" + nameHLT + stream + "_el0_pt_vs_el1_pt").c_str(), nbins_subleadPt_2D, edges_subleadPt_2D, nbins_subleadPt_2D, edges_subleadPt_2D );
+	TH2D* h_el0_pt_vs_el1_pt = new TH2D( ("h_" + nameHLT + stream + "_el0_pt_vs_el1_pt").c_str(),  ("h_" + nameHLT + stream + "_el0_pt_vs_el1_pt").c_str(), nbins_Neff_2D_LeaElEl, edges_nbins_Neff_2D_LeaElEl, nbins_Neff_2D_SubElEl, edges_nbins_Neff_2D_SubElEl);
 	h_el0_pt_vs_el1_pt->SetXTitle("Leading Electron p_{T} [GeV]");
 	h_el0_pt_vs_el1_pt->SetYTitle("Sub-Leading Electron p_{T} [GeV]");
 
@@ -409,7 +587,8 @@ void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream=
 	TH2D* h_mu0_eta_vs_mu1_eta = new TH2D( ("h_" + nameHLT + stream + "_mu0_eta_vs_mu1_eta").c_str(),  ("h_" + nameHLT + stream + "_mu0_eta_vs_mu1_eta").c_str(), nbins_EtaByEta_2D, edges_EtaByEta_2D, nbins_EtaByEta_2D, edges_EtaByEta_2D );
 	h_mu0_eta_vs_mu1_eta->SetXTitle("Leading Muon |#eta|");
 	h_mu0_eta_vs_mu1_eta->SetYTitle("Sub-Leading Muon |#eta|");
-	TH2D* h_mu0_pt_vs_mu1_pt = new TH2D( ("h_" + nameHLT + stream + "_mu0_pt_vs_mu1_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt_vs_mu1_pt").c_str(), nbins_subleadPt_2D, edges_subleadPt_2D, nbins_subleadPt_2D, edges_subleadPt_2D );
+	//TH2D* h_mu0_pt_vs_mu1_pt = new TH2D( ("h_" + nameHLT + stream + "_mu0_pt_vs_mu1_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt_vs_mu1_pt").c_str(), nbins_subleadPt_2D, edges_subleadPt_2D, nbins_subleadPt_2D, edges_subleadPt_2D );
+	TH2D* h_mu0_pt_vs_mu1_pt = new TH2D( ("h_" + nameHLT + stream + "_mu0_pt_vs_mu1_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt_vs_mu1_pt").c_str(), nbins_Neff_2D_LeaMuMu, edges_nbins_Neff_2D_LeaMuMu, nbins_Neff_2D_SubMuMu, edges_nbins_Neff_2D_SubMuMu );
 	h_mu0_pt_vs_mu1_pt->SetXTitle("Leading Muon p_{T} [GeV]");
 	h_mu0_pt_vs_mu1_pt->SetYTitle("Sub-Leading Muon p_{T} [GeV]");
 
@@ -417,9 +596,9 @@ void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream=
 	TH2D* h_mu0_eta_vs_el0_eta = new TH2D( ("h_" + nameHLT + stream + "_mu0_eta_vs_el0_eta").c_str(),  ("h_" + nameHLT + stream + "_mu0_eta_vs_el0_eta").c_str(), nbins_EtaByEta_2D, edges_EtaByEta_2D, nbins_EtaByEta_2D, edges_EtaByEta_2D );
 	h_mu0_eta_vs_el0_eta->SetXTitle("Leading Muon |#eta|");
 	h_mu0_eta_vs_el0_eta->SetYTitle("Leading Electron |#eta|");
-	TH2D* h_mu0_pt_vs_el0_pt = new TH2D( ("h_" + nameHLT + stream + "_mu0_pt_vs_el0_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt_vs_el0_pt").c_str(), nbins_pt_2D, edges_pt_2D, nbins_pt_2D, edges_pt_2D );
-	h_mu0_pt_vs_el0_pt->SetXTitle("Leading Muon p_{T} [GeV]");
-	h_mu0_pt_vs_el0_pt->SetYTitle("Leading Electron p_{T} [GeV]");
+	TH2D* h_mu0_pt_vs_el0_pt = new TH2D( ("h_" + nameHLT + stream + "_mu0_pt_vs_el0_pt").c_str(),  ("h_" + nameHLT + stream + "_mu0_pt_vs_el0_pt").c_str(), nbins_Neff_2D_LeaElMu, edges_nbins_Neff_2D_LeaElMu, nbins_Neff_2D_SubElMu, edges_nbins_Neff_2D_SubElMu );
+	h_mu0_pt_vs_el0_pt->SetXTitle("Muon p_{T} [GeV]");
+	h_mu0_pt_vs_el0_pt->SetYTitle("Electron p_{T} [GeV]");
 
 	array->AddLast(h_el0_pt_vs_eta);
 	array->AddLast(h_el1_pt_vs_eta);
@@ -438,88 +617,90 @@ void createEfficiencyHistograms(TObjArray* array, string nameHLT, string stream=
 }
 
 
-void initEfficiencyHistograms(TObjArray* array, string nameHLT, bool splitStreams)
+void initEfficiencyHistograms(TObjArray* array, string nameHLT, bool splitStreams, int era = 0)
 {
 	// always create general histograms
-	createEfficiencyHistograms(array, nameHLT);
+	createEfficiencyHistograms(array, nameHLT,"",era);
 	if (splitStreams) { // create plots split by presence of good electron or muon if necessary --> should be needed for denominator in efficiency calculations
-		createEfficiencyHistograms(array, nameHLT, "_elStreamSL");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamSL");
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL");
+		createEfficiencyHistograms(array, nameHLT, "_elStreamSL",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamSL",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL",era);
 
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_njetshigh");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_njetshigh");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_njetshigh");
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_njetslow");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_njetslow");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_njetslow");
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_njetshigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_njetshigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_njetshigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_njetslow",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_njetslow",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_njetslow",era);
 
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_npvhigh");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_npvhigh");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_npvhigh");
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_npvlow");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_npvlow");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_npvlow");
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_npvhigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_npvhigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_npvhigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_npvlow",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_npvlow",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_npvlow",era);
 
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_methigh");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_methigh");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_methigh");
-		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_metlow");
-		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_metlow");
-		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_metlow");
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_methigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_methigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_methigh",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_metlow",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_metlow",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_metlow",era);
 
 	}
 
 }
 
-void initializeHistograms(TObjArray* array, string nameHLT, bool splitStreams=false)
+void initializeHistograms(TObjArray* array, string nameHLT, bool splitStreams=false, int era = 0)
 {
+	//Criação dos histogramas 2x2 de correlaçao entre ativado ou não
 	init2DCorrelationHistograms(array, nameHLT);
-	initEfficiencyHistograms(array, nameHLT, splitStreams);
+	//Cria o canvas (com os bins) de varias variaveis de interesse
+	initEfficiencyHistograms(array, nameHLT, splitStreams, era);
 
 	return;
 }
 
-void initStackHistograms(TObjArray* array, string nameHLT, string sample)
+void initStackHistograms(TObjArray* array, string nameHLT, string sample, int era = 0)
 {
 	// always create general histograms
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample).c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_2j1b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_2j2b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_3j1b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_3j2b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_3j3b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j1b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j2b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j3b").c_str() );
-	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j4b").c_str() );
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample).c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_2j1b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_2j2b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_3j1b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_3j2b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_3j3b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j1b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j2b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j3b").c_str() ,era);
+	createEfficiencyHistograms(array, nameHLT, ("_" + sample + "_4j4b").c_str() ,era);
 
 }
-void initializeStackHistograms(TObjArray* array, string sample)
+void initializeStackHistograms(TObjArray* array, string sample,int era = 0)
 {
 	if (sample.find("ttbar")==string::npos) { // simple if not ttbar
-		initStackHistograms(array, "eeChannel", sample);
-		initStackHistograms(array, "emuChannel", sample);
-		initStackHistograms(array, "mumuChannel", sample);
+		initStackHistograms(array, "eeChannel", sample,era);
+		initStackHistograms(array, "emuChannel", sample,era);
+		initStackHistograms(array, "mumuChannel", sample,era);
 	}
 	else { // if ttbar, need separate histograms for tt+X flavors
-		initStackHistograms(array, "eeChannel",   "ttlf");
-		initStackHistograms(array, "emuChannel",  "ttlf");
-		initStackHistograms(array, "mumuChannel", "ttlf");
-		initStackHistograms(array, "eeChannel",   "ttcc");
-		initStackHistograms(array, "emuChannel",  "ttcc");
-		initStackHistograms(array, "mumuChannel", "ttcc");
-		initStackHistograms(array, "eeChannel",   "ttbb");
-		initStackHistograms(array, "emuChannel",  "ttbb");
-		initStackHistograms(array, "mumuChannel", "ttbb");
-		initStackHistograms(array, "eeChannel",   "ttb");
-		initStackHistograms(array, "emuChannel",  "ttb");
-		initStackHistograms(array, "mumuChannel", "ttb");
-		initStackHistograms(array, "eeChannel",   "tt2b");
-		initStackHistograms(array, "emuChannel",  "tt2b");
-		initStackHistograms(array, "mumuChannel", "tt2b");
+		initStackHistograms(array, "eeChannel",   "ttlf",era);
+		initStackHistograms(array, "emuChannel",  "ttlf",era);
+		initStackHistograms(array, "mumuChannel", "ttlf",era);
+		initStackHistograms(array, "eeChannel",   "ttcc",era);
+		initStackHistograms(array, "emuChannel",  "ttcc",era);
+		initStackHistograms(array, "mumuChannel", "ttcc",era);
+		initStackHistograms(array, "eeChannel",   "ttbb",era);
+		initStackHistograms(array, "emuChannel",  "ttbb",era);
+		initStackHistograms(array, "mumuChannel", "ttbb",era);
+		initStackHistograms(array, "eeChannel",   "ttb",era);
+		initStackHistograms(array, "emuChannel",  "ttb",era);
+		initStackHistograms(array, "mumuChannel", "ttb",era);
+		initStackHistograms(array, "eeChannel",   "tt2b",era);
+		initStackHistograms(array, "emuChannel",  "tt2b",era);
+		initStackHistograms(array, "mumuChannel", "tt2b",era);
 	}
 	return;
 }
@@ -586,23 +767,23 @@ void fill2DCorrHistograms(EventVars* eve, TObjArray*& array, string nameHLT, int
 		// else if( metTriggers.at(i) == "HLT_PFMET300")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->passHLT_PFMET300_v_);
 		// else if( metTriggers.at(i) == "HLT_PFHT300_PFMET110")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->passHLT_PFHT300_PFMET110_v_);
 
-		if(      metTriggers.at(i) == "HLT_PFHT500_PFMET100_PFMHT100_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFHT700_PFMET85_PFMHT85_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFHT800_PFMET75_PFMHT75_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFMET250_HBHECleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFMET120_PFMHT120_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMET120_PFMHT120_IDTight);                               //
+		if(      metTriggers.at(i) == "HLT_PFHT500_PFMET100_PFMHT100_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFHT700_PFMET85_PFMHT85_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFHT800_PFMET75_PFMHT75_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFMET250_HBHECleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFMET120_PFMHT120_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMET120_PFMHT120_IDTight_);                               //
 		else if( metTriggers.at(i) == "HLT_allMET")fill2DCorrHistogramsWithLabels(hist, passHLT, jetMetTool.passAllMETTriggers);                                                       //
-		else if( metTriggers.at(i) == "HLT_PFMET200_HBHE_BeamHaloCleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFMETNoMu120_PFMHTNoMu120_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight);               //
-		else if( metTriggers.at(i) == "HLT_PFMET120_PFMHT120_IDTight_PFHT60")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ);
-		else if( metTriggers.at(i) == "HLT_MET200")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_MET200);                                                                     //
+		else if( metTriggers.at(i) == "HLT_PFMET200_HBHE_BeamHaloCleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFMETNoMu120_PFMHTNoMu120_IDTight")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_);               //
+		else if( metTriggers.at(i) == "HLT_PFMET120_PFMHT120_IDTight_PFHT60")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_);
+		else if( metTriggers.at(i) == "HLT_MET200")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_MET200_);                                                                     //
 		
-		else if( metTriggers.at(i) == "HLT_PFMET170_HBHECleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMET170_HBHECleaned);                                         //
-		else if( metTriggers.at(i) == "HLT_PFMET300")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMET300);                                                                 //
+		else if( metTriggers.at(i) == "HLT_PFMET170_HBHECleaned")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMET170_HBHECleaned_);                                         //
+		else if( metTriggers.at(i) == "HLT_PFMET300")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFMET300_);                                                                 //
 
-		else if( metTriggers.at(i) == "HLT_PFHT300_PFMET110")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFHT300_PFMET110);                                                 //
+		else if( metTriggers.at(i) == "HLT_PFHT300_PFMET110")fill2DCorrHistogramsWithLabels(hist, passHLT, eve->HLT_PFHT300_PFMET110_);                                                 //
 
 
 
@@ -911,6 +1092,8 @@ void drawEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string nam
 	// *** 1. Get the histograms
 	TH1D* h_num   = (TH1D*)a_numerator->FindObject( ("h_" + nameHLT_num + "_" + var).c_str() );
 	TH1D* h_denom = (TH1D*)a_denominator->FindObject( ("h_" + nameHLT_denom + "_" + var).c_str() );
+	//cout << h_num->GetName() << " has " << h_num->GetEntries() << " entries." << endl;
+	//cout << h_denom->GetName() << " has " << h_denom->GetEntries() << " entries." << endl;
 	h_num->Sumw2();
 	h_denom->Sumw2();
 	addOverflow(h_num);
@@ -918,8 +1101,7 @@ void drawEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string nam
 	addUnderflow(h_num);
 	addUnderflow(h_denom);
 
-	// cout << h_num->GetName() << " has " << h_num->GetEntries() << " entries." << endl;
-	// cout << h_denom->GetName() << " has " << h_denom->GetEntries() << " entries." << endl;
+	
 
 	// *** 2. Divide to get efficiency
 	TH1D* h_eff = (TH1D*)h_num->Clone();
@@ -934,20 +1116,31 @@ void drawEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string nam
 	h_eff->SetMinimum(0.0);
 
 	TEfficiency* tEff = new TEfficiency(*h_eff, *h_denom);
+	//tEff->SetStatisticOption(TEfficiency::kFNormal);
+	// std::cout<<"Nome do grafico 1D numerador: "<<("h_" + nameHLT_num + "_" + var).c_str()<<endl;
+	// std::cout<<"Nome do grafico 1D denominador: "<<("h_" + nameHLT_denom + "_" + var).c_str()<<endl;
+	// std::cout<<"Option do graf 1D: "<<tEff->GetStatisticOption()<<endl;
+	// std::cout<<"Nivel de confianca dos dados: "<<tEff->GetConfidenceLevel()<<endl;
 	s_eff = h_num->GetName();
 	s_eff = (s_eff + "_TEff").c_str();
 	tEff->SetName( s_eff.c_str() );
 	tEff->SetTitle( s_eff.c_str() );
+
+	//std::cout<<"Histograma "<<tEff->GetName()<<" com peso de "<<tEff->GetWeight()<<std::endl;
+
 
 	// *** 3. Do the drawing
 	//h_eff->Sumw2();
 	c0->cd();
 	tEff->Draw();
 	tEff->Paint("");
+	// std::cout<<"Option do grafico 1D apos dar Draw(): "<<tEff->GetStatisticOption()<<endl;
+	// std::cout<<"Nivel de confianca dos dados apos mudar o option: "<<tEff->GetConfidenceLevel()<<endl;
+
 	TGraphAsymmErrors* gr = (TGraphAsymmErrors*)tEff->GetPaintedGraph();
 	gr->SetMinimum(0);
 	gr->SetMaximum(1.1);
-	// cout << s_eff << ", Min: " << h_eff->GetXaxis()->GetXmin()  << ", Max: " << h_eff->GetXaxis()->GetXmax() << endl;
+	//cout << s_eff << ", Min: " << h_eff->GetXaxis()->GetXmin()  << ", Max: " << h_eff->GetXaxis()->GetXmax() << endl;
 	gr->GetXaxis()->SetRangeUser( h_eff->GetXaxis()->GetXmin(), h_eff->GetXaxis()->GetXmax() );
 
 	tEff->Draw();
@@ -992,6 +1185,8 @@ void draw2DEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string n
 	// *** 1. Get the histograms
 	TH2D* h_num   = (TH2D*)a_numerator->FindObject( ("h_" + nameHLT_num + "_" + var).c_str() );
 	TH2D* h_denom = (TH2D*)a_denominator->FindObject( ("h_" + nameHLT_denom + "_" + var).c_str() );
+	//cout << h_num->GetName() << " has " << h_num->GetEntries() << " entries." << endl;
+	//cout << h_denom->GetName() << " has " << h_denom->GetEntries() << " entries." << endl;
 	h_num->Sumw2();
 	h_denom->Sumw2();
 	addOverflow2D(h_num);
@@ -999,8 +1194,7 @@ void draw2DEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string n
 	addUnderflow2D(h_num);
 	addUnderflow2D(h_denom);
 
-	// cout << h_num->GetName() << " has " << h_num->GetEntries() << " entries." << endl;
-	// cout << h_denom->GetName() << " has " << h_denom->GetEntries() << " entries." << endl;
+	
 
 	// *** 2. Divide to get efficiency
 	TH2D* h_eff = (TH2D*)h_num->Clone();
@@ -1014,17 +1208,24 @@ void draw2DEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string n
 	//h_eff->SetMaximum(1.1);
 	//h_eff->SetMinimum(0.0);
 
+
 	TEfficiency* tEff = new TEfficiency(*h_eff, *h_denom);
+	//tEff->SetStatisticOption(TEfficiency::kFNormal);
+	// std::cout<<"Option do grafico 2D : "<<tEff->GetStatisticOption()<<endl;
+	// std::cout<<"Nivel de confianca dos dados apos mudar o option: "<<tEff->GetConfidenceLevel()<<endl;
 	s_eff = h_num->GetName();
 	s_eff = (s_eff + "_TEff2D").c_str();
 	tEff->SetName( s_eff.c_str() );
 	tEff->SetTitle( s_eff.c_str() );
 
+	//std::cout<<"Histograma "<<tEff->GetName()<<" com peso de "<<tEff->GetWeight()<<std::endl;
 	// *** 3. Do the drawing
 	//h_eff->Sumw2();
 	c0->cd();
 	tEff->Draw();
 	tEff->Paint("");
+	// std::cout<<"Option do grafico 2D apos dar Draw(): "<<tEff->GetStatisticOption()<<endl;
+	// std::cout<<"Nivel de confianca dos dados apos mudar o option: "<<tEff->GetConfidenceLevel()<<endl;
 	//TGraphAsymmErrors* gr = (TGraphAsymmErrors*)tEff->GetPaintedGraph();
 	//gr->SetMinimum(0);
 	//gr->SetMaximum(1.1);
@@ -1032,6 +1233,8 @@ void draw2DEfficiencyHistograms_v2(TCanvas* c0, TObjArray* a_numerator, string n
 	//gr->GetXaxis()->SetRangeUser( h_eff->GetXaxis()->GetXmin(), h_eff->GetXaxis()->GetXmax() );
 
 	tEff->Draw();
+	// std::cout<<"Option do grafico 2D apos dar Draw() pela segunda vez: "<<tEff->GetStatisticOption()<<endl;
+	// std::cout<<"Nivel de confianca dos dados apos mudar o option: "<<tEff->GetConfidenceLevel()<<endl;
 	//c0->Update();
 
 	// *** 4. Setup LaTeX for printing correlation factor on plot

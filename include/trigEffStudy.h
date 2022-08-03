@@ -106,6 +106,31 @@ TObjArray* a_DoubleMu_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_METLOW = new TObjArray();
 
+//Canal Mumu
+TObjArray* a_DoubleMu_OR__X__allMET_NumSum2Fail = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que falharam.
+TObjArray* a_DoubleMu_OR__X__allMET_DenSum2Fail = new TObjArray();   //Objeto que representa o denominador do N_eff dos eventos que falharam.
+TObjArray* a_DoubleMu_OR__X__allMET_NumSum2Win = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que passaram.
+TObjArray* a_DoubleMu_OR__X__allMET_DenSum2Win = new TObjArray();   //Objeto que representa o denominador do N_eff dos eventos que passaram.
+//Canal ElMu
+TObjArray* a_EMu_OR__X__allMET_NumSum2Fail = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que falharam.
+TObjArray* a_EMu_OR__X__allMET_DenSum2Fail = new TObjArray();   //Objeto que representa o denominador do N_eff dos eventos que falharam.
+TObjArray* a_EMu_OR__X__allMET_NumSum2Win = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que passaram.
+TObjArray* a_EMu_OR__X__allMET_DenSum2Win = new TObjArray();   //Objeto que representa o denominador do N_eff dos eventos que passaram.
+
+//Canal ELEL
+TObjArray* a_DoubleEl_OR__X__allMET_NumSum2Fail = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que falharam.
+TObjArray* a_DoubleEl_OR__X__allMET_DenSum2Fail = new TObjArray();   //Objeto que representa o denominador do N_eff dos eventos que falharam.
+TObjArray* a_DoubleEl_OR__X__allMET_NumSum2Win = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que passaram.
+TObjArray* a_DoubleEl_OR__X__allMET_DenSum2Win = new TObjArray();   //Objeto que representa o denominador do N_eff dos eventos que passaram.
+
+
+
+
+
+
+
+
+
 
 TObjArray* a_Efficiencies = new TObjArray();
 

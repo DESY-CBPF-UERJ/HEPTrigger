@@ -69,7 +69,7 @@ void leptonHandler::setFlags(bool passMC, string inputFile)
 	isMC = passMC;
 	if (!isMC){
 	// *** I. Period
-    		if      (inputFile.find("Run2016B")  != string::npos)      dataPeriod = "B";
+    		if      (inputFile.find("Run2016B")  != string::npos) dataPeriod = "B";
     		else if (inputFile.find("Run2016C")  != string::npos) dataPeriod = "C";
     		else if (inputFile.find("Run2016D")  != string::npos) dataPeriod = "D";
     		else if (inputFile.find("Run2016E")  != string::npos) dataPeriod = "E";
@@ -77,12 +77,14 @@ void leptonHandler::setFlags(bool passMC, string inputFile)
     		else if (inputFile.find("Run2016F2") != string::npos) dataPeriod = "F2";
     		else if (inputFile.find("Run2016G")  != string::npos) dataPeriod = "G";
     		else if (inputFile.find("Run2016H")  != string::npos) dataPeriod = "H";
+			else if (inputFile.find("Run2016Full")  != string::npos) dataPeriod = "Full";
 
     		else if (inputFile.find("Run2017B") != string::npos) dataPeriod = "B";
     		else if (inputFile.find("Run2017C") != string::npos) dataPeriod = "C";
     		else if (inputFile.find("Run2017D") != string::npos) dataPeriod = "D";
     		else if (inputFile.find("Run2017E") != string::npos) dataPeriod = "E";
     		else if (inputFile.find("Run2017F") != string::npos) dataPeriod = "F";
+			
 
     		else if (inputFile.find("Run2018A") != string::npos) dataPeriod = "A";
     		else if (inputFile.find("Run2017B") != string::npos) dataPeriod = "B";
@@ -101,7 +103,11 @@ void leptonHandler::setFlags(bool passMC, string inputFile)
 
 void leptonHandler::applyMuonCuts()
 {
+	
 
+	//CORREÇÂO DO CODIGO-> Se tivessemos um evento com 1 lepton e 1 muon, ele automaticamente colocava o indeice deles de 0 e 1, quando deveria ser 0 e 0.
+
+	
  	for (unsigned int l = 0; l < ev->lepton_pt.size(); l++) {
 
     		// Cut 0: is muon
@@ -131,7 +137,6 @@ void leptonHandler::applyMuonCuts()
     		//h_mu_cutflow->Fill("Isolation < 0.25", 1);
     		//if (leadIndex_mu == -99)     h_mu_event_cutflow->Fill("Isolation < 0.25", 1);
     		nMuons++;
-
     		if (isDebug)
       			cout << "\n ev->evt = " << ev->evt << " and muon " << l << " has pt " << ev->lepton_pt[l] << " , eta " << ev->lepton_eta[l] << " , phi " << ev->lepton_phi[l] << " , iso " << ev->lepton_relIso[l] << " , isTight " << ev->lepton_isTight[l] << " , isMuon " << ev->lepton_isMuon[l] << " , charge " << ev->lepton_charge[l] << endl;
 
@@ -141,7 +146,10 @@ void leptonHandler::applyMuonCuts()
 
     		// set leading/subleading indices if appropriate
     		setLeadSubleadIndices(l, leadIndex_mu, subIndex_mu);
-  	} // loop over muons
+			// cout<<"Temos um Leadmuon, com indice:"<<leadIndex_mu<<endl;
+			// cout<<"Temos um Submuon, com indice:"<<subIndex_mu<<endl;
+			// cout<<"==========================================================="<<endl;
+	} // loop over muons
 
   	// *** ?. Wrap-up
 	//cout<<"leadIndex_mu = "<<leadIndex_mu<<endl;
@@ -243,6 +251,9 @@ void leptonHandler::applyElectronCuts()
 
 	    	// set leading/subleading indices if appropriate
 	    	setLeadSubleadIndices(l, leadIndex_el, subIndex_el);
+			// cout<<"Temos um Leadeletron, com indice:"<<leadIndex_el<<endl;
+			// cout<<"Temos um Subeletron, com indice:"<<subIndex_el<<endl;
+			// cout<<"==========================================================="<<endl;
 
   	} // loop over electrons
 
@@ -321,7 +332,7 @@ void leptonHandler::checkCategoryCuts()
     	//	if (leadCharge_mu*subCharge_mu == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="mumu")) ) )
 			if (leadCharge_mu*subCharge_mu == -1)
       			 //passDLCuts_mu = true;
-      			 passDLCuts_mu = true && ev->GoodFirstPV && ev-> passMETFilters;
+      			 passDLCuts_mu = true && (ev->RecoLepID==13) ; //&& ev->GoodFirstPV && ev-> passMETFilters;
   	}
 
   	// ###   DL ee   ###
@@ -333,7 +344,7 @@ void leptonHandler::checkCategoryCuts()
     	//	if (leadCharge_el*subCharge_el == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="ee")) ) )
 			if (leadCharge_el*subCharge_el == -1)
       			 //passDLCuts_el = true;
-      			passDLCuts_el = true && ev->GoodFirstPV && ev-> passMETFilters;
+      			passDLCuts_el = true && (ev->RecoLepID==11); //&& ev->GoodFirstPV && ev-> passMETFilters;
   	}
 
   	// ###   DL emu   ###
@@ -344,8 +355,8 @@ void leptonHandler::checkCategoryCuts()
       			cout << "Event " << ev->evt << " , leadCharge_mu " << leadCharge_mu << " , leadCharge_el " << leadCharge_el << endl;
     	//	if (leadCharge_mu*leadCharge_el == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="emu")) ) )
 			if (leadCharge_mu*leadCharge_el == -1 )
-      			 //passDLCuts_emu = true;
-      			passDLCuts_emu = true && ev->GoodFirstPV && ev-> passMETFilters;
+      			//passDLCuts_emu = true;
+      			passDLCuts_emu = true && (ev->RecoLepID==1311 || ev->RecoLepID==1113);// && ev->GoodFirstPV && ev-> passMETFilters;
   	}
 }
 
@@ -383,21 +394,22 @@ void leptonHandler::checkHLTTriggers()
 
       	// muon triggers
       	// passSLtriggers_mu = ev->passHLT_IsoMu27_v_ || (ev->passHLT_IsoMu24_eta2p1_v_ && b_periodDep__HLT_IsoMu24_eta2p1) ? true : false;
-      	passSLtriggers_mu = ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ  ? true : false;
+      	passSLtriggers_mu = (ev->HLT_IsoMu27_ || ev->HLT_Mu50_)  ? true : false;
 
     	//passDLtriggers_mu = (ev->passHLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v_ && b_periodDep__doubleMu_noMass) || ((ev->passHLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v_ || ev->passHLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v_) && b_periodDep__doubleMu_withMass) ? true : false; 	//Charis -- I tried this test - to remove the mass8 trigger - not reffered to in the AN
-     	passDLtriggers_mu = (ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ && b_periodDep__doubleMu_noMass) || ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ && b_periodDep__doubleMu_withMass) ? true : false;
+     	passDLtriggers_mu = ev->HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_ ? true : false; // && b_periodDep__doubleMu_noMass) || ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_ && b_periodDep__doubleMu_withMass) ? true : false;
 
       	// electron triggers
       	// passSLtriggers_el = ev->passHLT_Ele32_WPTight_Gsf_L1DoubleEG_v_ || (ev->passHLT_Ele28_eta2p1_WPTight_Gsf_HT150_v_ && !isTrigSF) ? true : false;
-      	passSLtriggers_el = ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ? true : false;
+      	passSLtriggers_el = false; //ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_ ? true : false;
       	//passSLtriggers_el = ev->passHLT_Ele35_WPTight_Gsf_v_ || (ev->passHLT_Ele28_eta2p1_WPTight_Gsf_HT150_v_ ) ? true : false;
-      	passDLtriggers_el = ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ? true : false;
+      	passDLtriggers_el = ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_ || ev->HLT_DoubleEle33_CaloIdL_MW_ ? true : false;
+
 
       	//if (passDLtriggers_el)
       	//  cout << "HEY! You're part of it!! (DLtriggers_el)" << endl;
 
-      	passDLtriggers_emu = ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ? true : false;
+      	passDLtriggers_emu = ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_ || ev->HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_ ? true : false;
 
       	//if (passDLtriggers_emu)
       	//  cout << "HEY! You're part of it!! (DLtriggers_emu)" << endl;
@@ -407,14 +419,24 @@ void leptonHandler::checkHLTTriggers()
 
     if(era_==2016){
 
-      	passSLtriggers_mu = (ev->HLT_IsoMu24 || ev->HLT_IsoTkMu24) ? true : false;
-    	passDLtriggers_mu = ( ( (ev->HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL  || ev->HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL ) && (dataPeriod != "H" ) ) || ( (ev->HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ  || ev->HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ ) && (dataPeriod == "H" ) ) ) ? true : false;
+		if(dataPeriod == "Full"){
+			passSLtriggers_mu = (ev->Lep_triggers) ? true : false;
+			passDLtriggers_mu = (ev->Lep_triggers) ? true : false;
+			passSLtriggers_el = (ev->Lep_triggers) ? true : false;
+			passDLtriggers_el = (ev->Lep_triggers) ? true : false;
+			passDLtriggers_emu = (ev->Lep_triggers) ? true : false;
+		}
 
-      	passSLtriggers_el = ( ev->HLT_Ele27_WPTight_Gsf || ev->HLT_Ele115_CaloIdVT_GsfTrkIdT ) ? true : false;
-      	passDLtriggers_el = ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ  ) ? true : false;
+      	passSLtriggers_mu = (ev->HLT_IsoMu24_ || ev->HLT_IsoTkMu24_ || ev-> HLT_Mu50_) ? true : false;
+    	passDLtriggers_mu = ( ( (ev->HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_  || ev->HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_ ) && (dataPeriod != "H" ) ) 
+								|| ( (ev->HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_  || ev->HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_ ) && (dataPeriod == "H" ) ) ) ? true : false;
 
-      	passDLtriggers_emu = ( ((ev->HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL || ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL) && (dataPeriod != "H" ))
-                                || ((ev->HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ) && (dataPeriod == "H" ))
+      	passSLtriggers_el = ( ev->HLT_Ele27_WPTight_Gsf_ || ev->HLT_Ele115_CaloIdVT_GsfTrkIdT_ ) ? true : false; //HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
+      	passDLtriggers_el = ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_  ) ? true : false;
+
+
+      	passDLtriggers_emu = ( ((ev->HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_ || ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_) && (dataPeriod != "H" ))
+                                || ((ev->HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_ || ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_) && (dataPeriod == "H" ))
                                 );
     }
 	///////////////////////////////////////////////////////////////////////
@@ -422,15 +444,15 @@ void leptonHandler::checkHLTTriggers()
 	////// 	2018 Trigger Logic 	///////////////////////////////////////
     if(era_==2018){
 
-      	passSLtriggers_mu = (ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ) ? true : false;
+      	passSLtriggers_mu = (ev->HLT_IsoMu24_ || ev->HLT_Mu50_) ? true : false;
     	// passDLtriggers_mu = ((ev->passHLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v_ ) || (ev->passHLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v_ )) ? true : false;
-    	passDLtriggers_mu = ((ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ )) ? true : false;
+    	passDLtriggers_mu = ((ev->HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_ )) ? true : false;
 
       	// passSLtriggers_el = ( ev->passHLT_Ele35_WPTight_Gsf_v_ || ev->passHLT_Ele32_WPTight_Gsf_v_ ) ? true : false;
-      	passSLtriggers_el = ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ) ? true : false;
-      	passDLtriggers_el = ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ) ? true : false;
+      	passSLtriggers_el = ( ev->HLT_Ele115_CaloIdVT_GsfTrkIdT_ || ev->HLT_Ele32_WPTight_Gsf_ ) ? true : false;
+      	passDLtriggers_el = ( ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_) ? true : false;
 
-     	passDLtriggers_emu = ( (ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ) || (ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ) || (ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ) || (ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ) );
+     	passDLtriggers_emu = ( (ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_ ) || (ev->HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_) ); // (ev->HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_ )
 
     }
 	///////////////////////////////////////////////////////////////////////
