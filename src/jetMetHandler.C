@@ -49,16 +49,16 @@ void jetMetHandler::parseMETTriggerLogic()
 {
 
 	// store all trigger bits in single string
-	ev->HLT_PFMET120_PFMHT120_IDTight ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_PFMET120_PFMHT120_IDTight_ ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
 	// ev->passHLT_PFMETTypeOne120_PFMHT120_IDTight_v_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
 	metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
 	// ev->passHLT_CaloMET250_HBHECleaned_v_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
 	metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
 
 	// Fill plots
 	// if ( metXTriggerBits.at(0) == '1' ) h_met_passXtriggers->Fill("PFMET120_PFMHT120_IDTight", 1);
@@ -95,11 +95,16 @@ void jetMetHandler::parseMETTriggerLogic_2017()
 
 	// store all trigger bits in single string
 
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_PFMET120_PFMHT120_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");							//
+	ev->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");					//
+	ev->HLT_PFMET200_HBHECleaned_? metXTriggerBits.append("1") : metXTriggerBits.append("0");								//
+	ev->HLT_PFMET200_HBHE_BeamHaloCleaned_ ? metXTriggerBits.append("1") : metXTriggerBits.append("0");						//
+	ev->HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+	ev->HLT_PFMET120_PFMHT120_IDTight_PFHT60_? metXTriggerBits.append("1") : metXTriggerBits.append("0");					//
+	ev->HLT_PFHT500_PFMET100_PFMHT100_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");					//
+	ev->HLT_PFHT700_PFMET85_PFMHT85_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");					//
+	ev->HLT_PFHT800_PFMET75_PFMHT75_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");					//
+	ev->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60_? metXTriggerBits.append("1") : metXTriggerBits.append("0");			//
 
 	// Fill plots
 	// if ( metXTriggerBits.at(0) == '1' ) h_met_passXtriggers->Fill("PFHT500_PFMET100_PFMHT100_IDTight", 1);
@@ -163,13 +168,15 @@ void jetMetHandler::parseMETTriggerLogic_2016(){
 
 	// This is the MET trigger logic for the 2016 Trigger SF derivation
 
-	ev->HLT_MET200? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_PFMET120_PFMHT120_IDTight? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_PFMET170_HBHECleaned? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_PFMET300 ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_PFHT300_PFMET110? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_MET200_? metXTriggerBits.append("1") : metXTriggerBits.append("0");											//
+	ev->HLT_PFMET120_PFMHT120_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");						//
+	ev->HLT_PFMET170_HBHECleaned_? metXTriggerBits.append("1") : metXTriggerBits.append("0");							//
+	ev->HLT_PFMET300_ ? metXTriggerBits.append("1") : metXTriggerBits.append("0");                                      //
+	ev->HLT_PFHT300_PFMET110_? metXTriggerBits.append("1") : metXTriggerBits.append("0");								//
 	//ev->passPFMET110_HLT_MET200_v_? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+
+	// ev->Met_triggers ? metXTriggerBits.append("1") : metXTriggerBits.append("0");	
 
 	// Fill plots
 	// if ( metXTriggerBits.at(0) == '1' ) h_met_passXtriggers->Fill("MET200", 1);
@@ -190,7 +197,14 @@ void jetMetHandler::parseMETTriggerLogic_2016(){
 	// if ( metXTriggerBits.find("000001") != string::npos ) h_met_passOnlyXtrigger->Fill("PFMETNoMu120_PFMHTNoMu120_IDTight", 1);
 
 	// set boolean of passing desired X triggers
+
 	passAllMETTriggers = metXTriggerBits.find('1') != string::npos ? true : false; // pass any X trigger
+
+	if (passAllMETTriggers != ev->Met_triggers){
+		std::cout<<"uepaaaa"<<endl;
+	}
+	// std::cout<<"String dos triggers: "<<metXTriggerBits<<endl;
+	// std::cout<<"Valor do passAllMEtTriggers"<<passAllMETTriggers<<endl;
 
 }
 
@@ -199,15 +213,16 @@ void jetMetHandler::parseMETTriggerLogic_2018(){
 
 	// This is the MET trigger logic for the 2018 Trigger SF derivation
 
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
-	ev->HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ? metXTriggerBits.append("1") : metXTriggerBits.append("0");
+	ev->HLT_PFMET120_PFMHT120_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");						//
+	ev->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+	ev->HLT_PFMET200_HBHECleaned_? metXTriggerBits.append("1") : metXTriggerBits.append("0");							//
+	ev->HLT_PFMET200_HBHE_BeamHaloCleaned_ ? metXTriggerBits.append("1") : metXTriggerBits.append("0");					//
+	ev->HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned_? metXTriggerBits.append("1") : metXTriggerBits.append("0");			//
+	ev->HLT_PFMET120_PFMHT120_IDTight_PFHT60_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+	ev->HLT_PFHT500_PFMET100_PFMHT100_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+	ev->HLT_PFHT700_PFMET85_PFMHT85_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+	ev->HLT_PFHT800_PFMET75_PFMHT75_IDTight_? metXTriggerBits.append("1") : metXTriggerBits.append("0");				//
+	ev->HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60_? metXTriggerBits.append("1") : metXTriggerBits.append("0");		//
 
 	// Fill plots
 	// if ( metXTriggerBits.at(0) == '1' ) h_met_passXtriggers->Fill("PFMET120_PFMHT120_IDTight", 1);
@@ -234,12 +249,17 @@ void jetMetHandler::parseMETTriggerLogic_2018(){
 
 
 	// set boolean of passing desired X triggers
-	passAllMETTriggers = metXTriggerBits.find('1') != string::npos ? true : false; // pass any X trigger
+	// passAllMETTriggers = metXTriggerBits.find('1') != string::npos ? true : false; // pass any X trigger
+	passAllMETTriggers = ev->Met_triggers;
+
+	if (passAllMETTriggers != ev->Met_triggers){
+		std::cout<<"uepaaaa"<<endl;
+	}
 
 }
 void jetMetHandler::applyMETCuts()
 {
-
+	// std::cout<<"era: "<<era_<<endl;
     if(era_==2016){
         parseMETTriggerLogic_2016();
     }
@@ -320,6 +340,7 @@ void jetMetHandler::applyJetCuts()
   	// ** Secondary true condition if running in trigSF mode
   	// if ( isTrigSF && ( ((lTool.passDLCuts_mu || lTool.passDLCuts_el) && MET>40.) || (lTool.passDLCuts_emu) )) {
   	// if ( isTrigSF && ( ((lTool.passDLCuts_mu || lTool.passDLCuts_el) && MET>30.) || (lTool.passDLCuts_emu) )) {
+	
   	if ( isTrigSF && ( (lTool.passDLCuts_mu || lTool.passDLCuts_el) || (lTool.passDLCuts_emu) )) {
 	       passDLJetMetCuts = true;
 	    //passDLJetMetCuts = true && ev->GoodFirstPV && ev-> passMETFilters;;
@@ -366,9 +387,10 @@ void jetMetHandler::Event(EventVars* eve, leptonHandler lep, bool passDebug, boo
 
 	// *** 2. Start handling business! (or at least jets and MET)
 	applyMETCuts();
-	if (nPreCutJets > 0 ) {
-		applyJetCuts();
-  	}
+	applyJetCuts();
+	// if (nPreCutJets > 0 ) {
+	// 	applyJetCuts();
+  	// }
 }
 
 void jetMetHandler::setLeadSubleadIndices(int l, int& lead, int& sub)
