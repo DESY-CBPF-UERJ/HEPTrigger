@@ -210,6 +210,10 @@ void fillEfficiencyHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, T
 		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_metlow",N_eff);
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_metlow",N_eff);
 		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (jetMetTool.passMETCuts == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_metlow",N_eff);
+		//Add region with Number of muon = 2
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.passMultiMuons == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_NMu2",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.passMultiMuons == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_NMu2",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.passMultiMuons == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_NMu2",N_eff);
 
 
   }
@@ -648,6 +652,11 @@ void initEfficiencyHistograms(TObjArray* array, string nameHLT, bool splitStream
 		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_metlow",era);
 		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_metlow",era);
 		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_metlow",era);
+
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_NMu2",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_NMu2",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_NMu2",era);
+		
 
 	}
 

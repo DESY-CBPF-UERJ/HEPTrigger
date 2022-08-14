@@ -75,6 +75,7 @@ class leptonHandler{
       bool b_periodDep__HLT_IsoMu24_eta2p1;
       bool b_periodDep__doubleMu_noMass;
       bool b_periodDep__doubleMu_withMass;
+      int passMultiMuons;
       int leadIndex_el;
       int subIndex_el;
       int leadIndex_mu;
