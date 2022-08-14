@@ -14,6 +14,7 @@ leptonHandler::leptonHandler()
 	passDLtriggers_el = false;
 	passDLtriggers_mu = false;
 	passDLtriggers_emu = false;
+	passMultiMuons = -1;
 	nLeptons = 0;
 	nMuons = 0;
 	leadPt_mu = -99;
@@ -314,7 +315,9 @@ void leptonHandler::setLeadSubleadIndices(int l, int& lead, int& sub)
 
 void leptonHandler::checkCategoryCuts()
 {
-  	// ###   SL mu   ###
+  	
+	
+	// ###   SL mu   ###
   	if (nMuons == 1 && nElectrons==0){
     		// passSLCuts_mu = true;
     		passSLCuts_mu = true && ev->GoodFirstPV && ev-> passMETFilters;
@@ -333,7 +336,10 @@ void leptonHandler::checkCategoryCuts()
 			if (leadCharge_mu*subCharge_mu == -1)
       			 //passDLCuts_mu = true;
       			 passDLCuts_mu = true && (ev->RecoLepID==13) ; //&& ev->GoodFirstPV && ev-> passMETFilters;
-  	}
+				if(nMuons > 1){
+					passMultiMuons = nMuons;
+				}
+	}
 
   	// ###   DL ee   ###
   	// VERSÃO ANTERIOR: if ( (nMuons==0 && nElectrons==2) && leadPt_el >= 25 && subPt_el >= 20){
@@ -345,7 +351,11 @@ void leptonHandler::checkCategoryCuts()
 			if (leadCharge_el*subCharge_el == -1)
       			 //passDLCuts_el = true;
       			passDLCuts_el = true && (ev->RecoLepID==11); //&& ev->GoodFirstPV && ev-> passMETFilters;
-  	}
+				if(nMuons > 1){
+					passMultiMuons = nMuons;
+				}
+	}
+
 
   	// ###   DL emu   ###
   	// if ( (nMuons==1 && nElectrons==1) && ((leadPt_mu >= 25 && leadPt_el >= 15) || (leadPt_el >= 25 && leadPt_mu >= 15)) ){
@@ -357,7 +367,14 @@ void leptonHandler::checkCategoryCuts()
 			if (leadCharge_mu*leadCharge_el == -1 )
       			//passDLCuts_emu = true;
       			passDLCuts_emu = true && (ev->RecoLepID==1311 || ev->RecoLepID==1113);// && ev->GoodFirstPV && ev-> passMETFilters;
+				if(nMuons > 1){
+					passMultiMuons = nMuons;
+				}
   	}
+
+
+
+
 }
 
 float leptonHandler::calculateDileptonMass(int index_lead, int index_sub)
