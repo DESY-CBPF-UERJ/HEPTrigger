@@ -57,10 +57,10 @@ TH2D* GetLumiScaledSystSF_2017(TString hist){
         // TFile* f_D = new TFile("/nfs/dust/cms/user/sewuchte/analysisFWK/TriggEffs/CMSSW_10_2_22/src/TopAnalysis/tth-triggerefficiency-dl/outputs_and_plotting_script/TriggerSFs_2017_D.root","READ");
         // TFile* f_E = new TFile("/nfs/dust/cms/user/sewuchte/analysisFWK/TriggEffs/CMSSW_10_2_22/src/TopAnalysis/tth-triggerefficiency-dl/outputs_and_plotting_script/TriggerSFs_2017_E.root","READ");
         // TFile* f_F = new TFile("/nfs/dust/cms/user/sewuchte/analysisFWK/TriggEffs/CMSSW_10_2_22/src/TopAnalysis/tth-triggerefficiency-dl/outputs_and_plotting_script/TriggerSFs_2017_F.root","READ");
-        TFile* f_A = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsA.root","READ");
-        TFile* f_B = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsB.root","READ");
-        TFile* f_C = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsC.root","READ");
-        TFile* f_D = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsD.root","READ");
+        TFile* f_A = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsA_2018.root","READ");
+        TFile* f_B = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsB_2018.root","READ");
+        TFile* f_C = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsC_2018.root","READ");
+        TFile* f_D = new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/TriggerSFsD_2018.root","READ");
 
         TH2D*  h2_all = (TH2D*)f->Get(hist);
         TH2D*  h_A = (TH2D*)f_A->Get(hist);

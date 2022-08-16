@@ -94,7 +94,7 @@ if (type == 18 or type == 'all'):
     #     os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018"+x+".root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\""+x+"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",0,\"\")'")
 
     # os.system("root -q 'ScaleFactors_syst_lumi.C()'")
-    # os.system("root -q '../systCombiner.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018\")'")
+    os.system("root -q '../systCombiner.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018\")'")
 
 
 

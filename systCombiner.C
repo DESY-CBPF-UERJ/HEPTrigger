@@ -133,7 +133,7 @@ TH2D* get2DScaleFactorDifferenceHistogram(TCanvas* c0, TH2D* h_nom, TH2D* h_nJet
 
 
 
-TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_nJetsHigh, TH2D* h_nJetsLow, TH2D* h_nPVHigh, TH2D* h_nPVLow, TH2D* h_METHigh, TH2D* h_METLow, string triggerSet, string variable)
+TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_nJetsHigh, TH2D* h_nJetsLow, TH2D* h_nPVHigh, TH2D* h_nPVLow, TH2D* h_METHigh, TH2D* h_METLow,TH2D* h_NMu2, string triggerSet, string variable)
 {
 
   TH2D* h_fullDiff = (TH2D*)h_nom->Clone();
@@ -156,6 +156,8 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
   h_meth->Add(h_METHigh, -1);
   TH2D* h_metl = (TH2D*)h_nom->Clone();
   h_metl->Add(h_METLow, -1);
+  TH2D* h_NumberMu2 = (TH2D*)h_nom->Clone();
+  h_NumberMu2->Add(h_NMu2, -1);
 
 
   std::cout<<"======================================================================"<<endl;
@@ -168,8 +170,10 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
       std::cout<<"Valor do h_njl: "<<h_njl->GetBinContent(x_b, y_b)<<endl;
       std::cout<<"Valor do h_npvh: "<<h_npvh->GetBinContent(x_b, y_b)<<endl;
       std::cout<<"Valor do h_npvl: "<<h_npvl->GetBinContent(x_b, y_b)<<endl;
-       std::cout<<"Valor do h_MEtLow: "<<h_metl->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor do h_MEtLow: "<<h_metl->GetBinContent(x_b, y_b)<<endl;
       std::cout<<"Valor do h_METHigh: "<<h_meth->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor do h_NumberMu2: "<<h_NumberMu2->GetBinContent(x_b, y_b)<<endl;
+
 
       if( abs(h_njh->GetBinContent(x_b, y_b)) > abs(h_fullDiff->GetBinContent(x_b, y_b))) {
 	h_fullDiff->SetBinContent(x_b, y_b, h_njh->GetBinContent(x_b, y_b));
@@ -256,6 +260,7 @@ TH2D* make2DSFwithSysts(TCanvas* c0, TObjArray* array, string triggerSet, string
   TH2D* h_highNPV   = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_NPVHIGH.root").c_str()))->Get( hist.c_str() );
   TH2D* h_lowMET    = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_METLOW.root").c_str()))->Get( hist.c_str() );
   TH2D* h_highMET   = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_METHIGH.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_NMu2      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_NMu2.root").c_str()))->Get( hist.c_str() );
 
 
   // *** A. Set correlation error
@@ -302,7 +307,7 @@ TH2D* make2DSFwithSysts(TCanvas* c0, TObjArray* array, string triggerSet, string
 
   // *** C. first get max diff of high/low nJets/nPV w.r.t. nominal
   //TH2D* syst_highLowNjetsNPV = get2DScaleFactorDifferenceHistogram(c0, h_nom, h_highNjets, h_lowNjets, h_highNPV, h_lowNPV, triggerSet, variable);
-  TH2D* syst_highLowNjetsNPVMET = get2DScaleFactorDifferenceHistogram_v2(c0, h_nom, h_highNjets, h_lowNjets, h_highNPV, h_lowNPV, h_highMET, h_lowMET, triggerSet, variable);
+  TH2D* syst_highLowNjetsNPVMET = get2DScaleFactorDifferenceHistogram_v2(c0, h_nom, h_highNjets, h_lowNjets, h_highNPV, h_lowNPV, h_highMET, h_lowMET,h_NMu2, triggerSet, variable);
 
   std::cout<<"Histograma: "<<(variable + "_withSysts").c_str()<<endl;
   // *** D. then calculate full error envelope
@@ -416,6 +421,7 @@ void systCombiner(string path)
   TFile *f_highNPV   = new TFile((path+"/TriggerSFs_2018_NPVHIGH.root").c_str(), "READ");
   TFile *f_lowMET    = new TFile((path+"/TriggerSFs_2018_METLOW.root").c_str(), "READ");
   TFile *f_highMET   = new TFile((path+"/TriggerSFs_2018_METHIGH.root").c_str(), "READ");
+  TFile *f_NMu2   = new TFile((path+"/TriggerSFs_2018_NMu2.root").c_str(), "READ");
 
   //  TFile *f_outSysts  = new TFile( (path+"/tt_dileptonic_2DscaleFactors_withSysts_2016BCDEFGH_"+date+".root").c_str(), "RECREATE");
   // TFile *f_outSysts  = new TFile( ("tt_dileptonic_2DscaleFactors_withSysts_2017BCDEF_"+date+".root").c_str(), "RECREATE");
@@ -433,6 +439,7 @@ void systCombiner(string path)
   f_infiles->AddLast(f_lowNPV);
   f_infiles->AddLast(f_highMET);
   f_infiles->AddLast(f_lowMET);
+  f_infiles->AddLast(f_NMu2);
 
   // *** 2. Get Histograms
   TH2D* h_DoubleMu_mu0_pt_eta      = make2DSFwithSysts(c1, f_infiles, "DoubleMu_OR__X__allMET", "mu0_pt_vs_eta",path);
