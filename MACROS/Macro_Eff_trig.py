@@ -80,11 +80,9 @@ if (type == 18 or type == 'all'):
 
     # os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\"\")'")
 
-    list_varied_SF = ["_NMu2"]
-    for x in list_varied_SF:
-        os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\""+x+"\")'")
+    
 
-    # list_varied_SF = ["_NJETSHIGH","_NJETSLOW","_NPVHIGH","_NPVLOW","_METHIGH","_METLOW"]
+    # list_varied_SF = ["_NJETSHIGH","_NJETSLOW","_NPVHIGH","_NPVLOW","_METHIGH","_METLOW","_NMu2"]
     # for x in list_varied_SF:
     #     os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\""+x+"\")'")
 
