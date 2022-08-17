@@ -427,9 +427,12 @@ void systCombiner(string path)
   TFile *f_highNPV   = new TFile((path+"/TriggerSFs_2018_NPVHIGH.root").c_str(), "READ");
   TFile *f_lowMET    = new TFile((path+"/TriggerSFs_2018_METLOW.root").c_str(), "READ");
   TFile *f_highMET   = new TFile((path+"/TriggerSFs_2018_METHIGH.root").c_str(), "READ");
-  TFile *f_NMu2   = new TFile((path+"/TriggerSFs_2018_NMu2.root").c_str(), "READ");
-  TFile *f_NMu3   = new TFile((path+"/TriggerSFs_2018_NMu3.root").c_str(), "READ");
-  TFile *f_NMu4   = new TFile((path+"/TriggerSFs_2018_NMu4.root").c_str(), "READ");
+  TFile *f_NMu0   = new TFile((path+"/TriggerSFs_2018_ExNumMu0.root").c_str(), "READ");
+  TFile *f_NMu1   = new TFile((path+"/TriggerSFs_2018_ExNumMu1.root").c_str(), "READ");
+  TFile *f_NMu2   = new TFile((path+"/TriggerSFs_2018_ExNumMu2.root").c_str(), "READ");
+  TFile *f_NEl0   = new TFile((path+"/TriggerSFs_2018_ExNumEl0.root").c_str(), "READ");
+  TFile *f_NEl1   = new TFile((path+"/TriggerSFs_2018_ExNumEl1.root").c_str(), "READ");
+  TFile *f_NEl2   = new TFile((path+"/TriggerSFs_2018_ExNumEl2.root").c_str(), "READ");
 
   //  TFile *f_outSysts  = new TFile( (path+"/tt_dileptonic_2DscaleFactors_withSysts_2016BCDEFGH_"+date+".root").c_str(), "RECREATE");
   // TFile *f_outSysts  = new TFile( ("tt_dileptonic_2DscaleFactors_withSysts_2017BCDEF_"+date+".root").c_str(), "RECREATE");
@@ -447,9 +450,12 @@ void systCombiner(string path)
   f_infiles->AddLast(f_lowNPV);
   f_infiles->AddLast(f_highMET);
   f_infiles->AddLast(f_lowMET);
-  f_infiles->AddLast(f_NMu2);
-  f_infiles->AddLast(f_NMu3);
-  f_infiles->AddLast(f_NMu4);
+  f_infiles->AddLast(f_ExNumMu0);
+  f_infiles->AddLast(f_ExNumMu1);
+  f_infiles->AddLast(f_ExNumMu2);
+  f_infiles->AddLast(f_ExNumEl0);
+  f_infiles->AddLast(f_ExNumEl1);
+  f_infiles->AddLast(f_ExNumEl2);
 
 
   // *** 2. Get Histograms

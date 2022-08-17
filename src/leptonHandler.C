@@ -16,6 +16,7 @@ leptonHandler::leptonHandler()
 	passDLtriggers_emu = false;
 	// passMultiMuons = -1;
 	MuonExtraNumber = -99;
+	ElectronExtraNumber = -99;
 	nLeptons = 0;
 	nMuons = 0;
 	leadPt_mu = -99;
@@ -338,6 +339,7 @@ void leptonHandler::checkCategoryCuts()
       			 //passDLCuts_mu = true;
       			 passDLCuts_mu = true && (ev->RecoLepID==13) ; //&& ev->GoodFirstPV && ev-> passMETFilters;
 				 MuonExtraNumber = nMuons - 2;
+				 ElectronExtraNumber = nElectrons -0;
 	}
 
   	// ###   DL ee   ###
@@ -351,6 +353,7 @@ void leptonHandler::checkCategoryCuts()
       			 //passDLCuts_el = true;
       			passDLCuts_el = true && (ev->RecoLepID==11); //&& ev->GoodFirstPV && ev-> passMETFilters;
 				MuonExtraNumber = nMuons - 0;
+				ElectronExtraNumber = nElectrons - 2;
 	}
 
 
@@ -365,6 +368,7 @@ void leptonHandler::checkCategoryCuts()
       			//passDLCuts_emu = true;
       			passDLCuts_emu = true && (ev->RecoLepID==1311 || ev->RecoLepID==1113);// && ev->GoodFirstPV && ev-> passMETFilters;
 				MuonExtraNumber = nMuons - 1;
+				ElectronExtraNumber = nElectrons -1;
   	}
 
 

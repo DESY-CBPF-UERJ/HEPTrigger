@@ -106,26 +106,48 @@ TObjArray* a_DoubleMu_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_METLOW = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_ExNumMu0 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_ExNumMu0 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_ExNumMu0 = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_ExNumMu0 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumMu0 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumMu0 = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu0 = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu0 = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_ExNumMu0 = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_ExNumMu1 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_ExNumMu1 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_ExNumMu1 = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_ExNumMu1 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumMu1 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumMu1 = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu1 = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu1 = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_ExNumMu1 = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_ExNumMu2 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_ExNumMu2 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_ExNumMu2 = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_ExNumMu2 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumMu2 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumMu2 = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu2 = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu2 = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_ExNumMu2 = new TObjArray();
+
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumEl0 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumEl0 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumEl0 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumEl0 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumEl0 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumEl0 = new TObjArray();
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumEl1 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumEl1 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumEl1 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumEl1 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumEl1 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumEl1 = new TObjArray();
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumEl2 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumEl2 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumEl2 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumEl2 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumEl2 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumEl2 = new TObjArray();
 
 
 //Canal Mumu
