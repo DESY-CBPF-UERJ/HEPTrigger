@@ -79,6 +79,8 @@ struct EventVars{
   int lumi;
   long evt;
 
+
+  float LepLep_deltaR;
   float   puSF;
   bool    GoodFirstPV;
   Int_t   numPVs;
@@ -176,6 +178,8 @@ void EventVars::initialize(){
   GoodFirstPV = false;
   numPVs = -99;
   genweight = -999.;
+
+  LepLep_deltaR = -1;
 
   lepton_isMuon.clear();
   lepton_charge.clear();

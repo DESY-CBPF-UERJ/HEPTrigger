@@ -191,6 +191,7 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 
 
   // Declaration of leaf types
+   Float_t        LepLep_deltaR;
    Double_t        evtWeight;
    Double_t        Lep_leading_pt;
    Double_t        Lep_leading_eta;
@@ -276,7 +277,7 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 
 
 
-
+   ch1.SetBranchAddress("LepLep_deltaR",&LepLep_deltaR);
    ch1.SetBranchAddress("evtWeight", &evtWeight);
    ch1.SetBranchAddress("Lep_leading_pt", &Lep_leading_pt);
    ch1.SetBranchAddress("Lep_leading_eta", &Lep_leading_eta);
@@ -375,6 +376,7 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 		ch1.GetEntry(i);
 		
         if (RecoLepID == 11 || RecoLepID == 13 || RecoLepID == 1113 || RecoLepID == 1311){
+            eve->LepLep_deltaR = LepLep_deltaR;
             eve->puSF = 1.;
             eve->run = run_;
 		    eve->lumi = lumi_;
@@ -391,7 +393,6 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
                 eve->evtWeight = evtWeight*ajuste_no_peso;
             }
             
-
             eve->Lep_triggers = Lep_triggers;
             eve->Met_triggers = Met_triggers;
             eve->RecoLepID = RecoLepID;

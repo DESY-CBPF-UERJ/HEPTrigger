@@ -37,6 +37,7 @@ class leptonHandler{
       void Event(EventVars* eve, bool passDebug, bool passTrigSF);
 
       // === Variables === //
+      float LepLep_deltaR;
       bool passSLCuts_el;
       bool passSLCuts_mu;
       bool passDLCuts_el;
