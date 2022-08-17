@@ -133,7 +133,7 @@ TH2D* get2DScaleFactorDifferenceHistogram(TCanvas* c0, TH2D* h_nom, TH2D* h_nJet
 
 
 
-TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_nJetsHigh, TH2D* h_nJetsLow, TH2D* h_nPVHigh, TH2D* h_nPVLow, TH2D* h_METHigh, TH2D* h_METLow,TH2D* h_NMu2, string triggerSet, string variable)
+TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_nJetsHigh, TH2D* h_nJetsLow, TH2D* h_nPVHigh, TH2D* h_nPVLow, TH2D* h_METHigh, TH2D* h_METLow,TH2D* h_NMu2,TH2D* h_NMu3,TH2D* h_NMu4, string triggerSet, string variable)
 {
 
   TH2D* h_fullDiff = (TH2D*)h_nom->Clone();
@@ -158,6 +158,10 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
   h_metl->Add(h_METLow, -1);
   TH2D* h_NumberMu2 = (TH2D*)h_nom->Clone();
   h_NumberMu2->Add(h_NMu2, -1);
+  TH2D* h_NumberMu4 = (TH2D*)h_nom->Clone();
+  h_NumberMu4->Add(h_NMu3, -1);
+  TH2D* h_NumberMu4 = (TH2D*)h_nom->Clone();
+  h_NumberMu4->Add(h_NMu4, -1);
 
 
   std::cout<<"======================================================================"<<endl;
@@ -173,6 +177,8 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
       std::cout<<"Valor do h_MEtLow: "<<h_metl->GetBinContent(x_b, y_b)<<endl;
       std::cout<<"Valor do h_METHigh: "<<h_meth->GetBinContent(x_b, y_b)<<endl;
       std::cout<<"Valor do h_NumberMu2: "<<h_NumberMu2->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor do h_NumberMu3: "<<h_NumberMu3->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor do h_NumberMu4: "<<h_NumberMu4->GetBinContent(x_b, y_b)<<endl;
 
 
       if( abs(h_njh->GetBinContent(x_b, y_b)) > abs(h_fullDiff->GetBinContent(x_b, y_b))) {
@@ -422,6 +428,8 @@ void systCombiner(string path)
   TFile *f_lowMET    = new TFile((path+"/TriggerSFs_2018_METLOW.root").c_str(), "READ");
   TFile *f_highMET   = new TFile((path+"/TriggerSFs_2018_METHIGH.root").c_str(), "READ");
   TFile *f_NMu2   = new TFile((path+"/TriggerSFs_2018_NMu2.root").c_str(), "READ");
+  TFile *f_NMu3   = new TFile((path+"/TriggerSFs_2018_NMu3.root").c_str(), "READ");
+  TFile *f_NMu4   = new TFile((path+"/TriggerSFs_2018_NMu4.root").c_str(), "READ");
 
   //  TFile *f_outSysts  = new TFile( (path+"/tt_dileptonic_2DscaleFactors_withSysts_2016BCDEFGH_"+date+".root").c_str(), "RECREATE");
   // TFile *f_outSysts  = new TFile( ("tt_dileptonic_2DscaleFactors_withSysts_2017BCDEF_"+date+".root").c_str(), "RECREATE");
@@ -440,6 +448,9 @@ void systCombiner(string path)
   f_infiles->AddLast(f_highMET);
   f_infiles->AddLast(f_lowMET);
   f_infiles->AddLast(f_NMu2);
+  f_infiles->AddLast(f_NMu3);
+  f_infiles->AddLast(f_NMu4);
+
 
   // *** 2. Get Histograms
   TH2D* h_DoubleMu_mu0_pt_eta      = make2DSFwithSysts(c1, f_infiles, "DoubleMu_OR__X__allMET", "mu0_pt_vs_eta",path);
