@@ -283,7 +283,7 @@ void draw_ScaleFactors_systematics(string year,string local_data_root,string loc
              //sufix = "";
          }
 
-         if (data_type == "_NJETSHIGH" || data_type == "_NJETSLOW" || data_type == "_NJETSLOW" || data_type == "_NPVHIGH" || data_type == "_NPVLOW" || data_type == "_METHIGH" || data_type == "_METLOW" || data_type == "_NMu2" ){
+         if (data_type == "_NJETSHIGH" || data_type == "_NJETSLOW" || data_type == "_NJETSLOW" || data_type == "_NPVHIGH" || data_type == "_NPVLOW" || data_type == "_METHIGH" || data_type == "_METLOW" || data_type == "_NMu2" || data_type == "_NMu3" || data_type == "_NMu4" ){
              s = data_type;
              tag = data_type;
              Skip = true; // We dont make some plots if this differents regions, so this code skip them if this boolian is true
