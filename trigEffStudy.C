@@ -216,6 +216,13 @@ void trigEffStudy(string p_topDir="", string p_isMC="", string p_passFile="", st
     initializeHistograms(a_DoubleEl_OR__X__allMET_NMu3, "DoubleEl_OR__X__allMET_NMu3",false,era);
     initializeHistograms(a_EMu_OR__X__allMET_NMu3, "EMu_OR__X__allMET_NMu3",false,era);
 
+	initializeHistograms(a_HLT_DoubleMu_OR_NMu4, "HLT_DoubleMu_OR_NMu4",false,era);
+    initializeHistograms(a_HLT_DoubleEl_OR_NMu4, "HLT_DoubleEl_OR_NMu4",false,era);
+    initializeHistograms(a_HLT_EMu_OR_NMu4, "HLT_EMu_OR_NMu4",false,era);
+    initializeHistograms(a_DoubleMu_OR__X__allMET_NMu4, "DoubleMu_OR__X__allMET_NMu4",false,era);
+    initializeHistograms(a_DoubleEl_OR__X__allMET_NMu4, "DoubleEl_OR__X__allMET_NMu4",false,era);
+    initializeHistograms(a_EMu_OR__X__allMET_NMu4, "EMu_OR__X__allMET_NMu4",false,era);
+
 
 	// *** 2. Set tree structure and variables to read
 	eve=0;
@@ -422,6 +429,18 @@ void trigEffStudy(string p_topDir="", string p_isMC="", string p_passFile="", st
                 if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && (lepTool.passMultiMuons == 3) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts ) fillEfficiencyHistograms(lepTool, jetMetTool, a_HLT_EMu_OR_NMu3, "HLT_EMu_OR_NMu3", p_passFile.c_str(),false,false);
                 if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && (lepTool.passMultiMuons == 3) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_EMu_OR__X__allMET_NMu3, "EMu_OR__X__allMET_NMu3", p_passFile.c_str(),false,false);
  
+ 				//Number of Muon = 4
+				// std::cout<<"passMultiMuons:"<<lepTool.passMultiMuons<<endl;
+                // dilepton, ee
+                if ((lepTool.passSLtriggers_el || lepTool.passDLtriggers_el) && (lepTool.passMultiMuons == 4) && lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts  ) fillEfficiencyHistograms(lepTool, jetMetTool, a_HLT_DoubleEl_OR_NMu4, "HLT_DoubleEl_OR_NMu4", p_passFile.c_str(),false,false);
+                if ((lepTool.passSLtriggers_el || lepTool.passDLtriggers_el) && (lepTool.passMultiMuons == 4) && lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_DoubleEl_OR__X__allMET_NMu4, "DoubleEl_OR__X__allMET_NMu4", p_passFile.c_str(),false,false);
+                // dilepton, mumu
+                if ((lepTool.passSLtriggers_mu || lepTool.passDLtriggers_mu) && (lepTool.passMultiMuons == 4) && lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts ) fillEfficiencyHistograms(lepTool, jetMetTool, a_HLT_DoubleMu_OR_NMu4, "HLT_DoubleMu_OR_NMu4", p_passFile.c_str(),false,false);
+                if ((lepTool.passSLtriggers_mu || lepTool.passDLtriggers_mu) && (lepTool.passMultiMuons == 4) && lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_DoubleMu_OR__X__allMET_NMu4, "DoubleMu_OR__X__allMET_NMu4", p_passFile.c_str(),false,false);
+                // dilepton, emu
+                if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && (lepTool.passMultiMuons == 4) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts ) fillEfficiencyHistograms(lepTool, jetMetTool, a_HLT_EMu_OR_NMu4, "HLT_EMu_OR_NMu4", p_passFile.c_str(),false,false);
+                if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && (lepTool.passMultiMuons == 4) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_EMu_OR__X__allMET_NMu4, "EMu_OR__X__allMET_NMu4", p_passFile.c_str(),false,false);
+ 
 
 
 
@@ -505,6 +524,11 @@ void trigEffStudy(string p_topDir="", string p_isMC="", string p_passFile="", st
 	makeEfficiencyHistograms( c0, a_DoubleMu_OR__X__allMET_NMu3, "DoubleMu_OR__X__allMET_NMu3", a_HLT_allMET, "HLT_allMET_muStreamDL_NMu3");
     makeEfficiencyHistograms( c0, a_DoubleEl_OR__X__allMET_NMu3, "DoubleEl_OR__X__allMET_NMu3", a_HLT_allMET, "HLT_allMET_elStreamDL_NMu3");
     makeEfficiencyHistograms( c0, a_EMu_OR__X__allMET_NMu3, "EMu_OR__X__allMET_NMu3", a_HLT_allMET, "HLT_allMET_emuStreamDL_NMu3");
+
+	//Add new regions N muon = 4
+	makeEfficiencyHistograms( c0, a_DoubleMu_OR__X__allMET_NMu4, "DoubleMu_OR__X__allMET_NMu4", a_HLT_allMET, "HLT_allMET_muStreamDL_NMu4");
+    makeEfficiencyHistograms( c0, a_DoubleEl_OR__X__allMET_NMu4, "DoubleEl_OR__X__allMET_NMu4", a_HLT_allMET, "HLT_allMET_elStreamDL_NMu4");
+    makeEfficiencyHistograms( c0, a_EMu_OR__X__allMET_NMu4, "EMu_OR__X__allMET_NMu4", a_HLT_allMET, "HLT_allMET_emuStreamDL_NMu4");
 
 	if (dumpFile){
     		outfile->Write();
