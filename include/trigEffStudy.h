@@ -106,26 +106,27 @@ TObjArray* a_DoubleMu_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_METLOW = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NMu2 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NMu2 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NMu2 = new TObjArray();
-TObjArray* a_DoubleMu_OR__X__allMET_NMu2 = new TObjArray();
-TObjArray* a_DoubleEl_OR__X__allMET_NMu2 = new TObjArray();
-TObjArray* a_EMu_OR__X__allMET_NMu2 = new TObjArray();
+TObjArray* a_HLT_DoubleMu_OR_ExNumMu0 = new TObjArray();
+TObjArray* a_HLT_DoubleEl_OR_ExNumMu0 = new TObjArray();
+TObjArray* a_HLT_EMu_OR_ExNumMu0 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu0 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu0 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumMu0 = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NMu3 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NMu3 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NMu3 = new TObjArray();
-TObjArray* a_DoubleMu_OR__X__allMET_NMu3 = new TObjArray();
-TObjArray* a_DoubleEl_OR__X__allMET_NMu3 = new TObjArray();
-TObjArray* a_EMu_OR__X__allMET_NMu3 = new TObjArray();
+TObjArray* a_HLT_DoubleMu_OR_ExNumMu1 = new TObjArray();
+TObjArray* a_HLT_DoubleEl_OR_ExNumMu1 = new TObjArray();
+TObjArray* a_HLT_EMu_OR_ExNumMu1 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu1 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu1 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumMu1 = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NMu4 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NMu4 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NMu4 = new TObjArray();
-TObjArray* a_DoubleMu_OR__X__allMET_NMu4 = new TObjArray();
-TObjArray* a_DoubleEl_OR__X__allMET_NMu4 = new TObjArray();
-TObjArray* a_EMu_OR__X__allMET_NMu4 = new TObjArray();
+TObjArray* a_HLT_DoubleMu_OR_ExNumMu2 = new TObjArray();
+TObjArray* a_HLT_DoubleEl_OR_ExNumMu2 = new TObjArray();
+TObjArray* a_HLT_EMu_OR_ExNumMu2 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu2 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu2 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumMu2 = new TObjArray();
+
 
 //Canal Mumu
 TObjArray* a_DoubleMu_OR__X__allMET_NumSum2Fail = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que falharam.

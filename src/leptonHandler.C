@@ -14,7 +14,8 @@ leptonHandler::leptonHandler()
 	passDLtriggers_el = false;
 	passDLtriggers_mu = false;
 	passDLtriggers_emu = false;
-	passMultiMuons = -1;
+	// passMultiMuons = -1;
+	MuonExtraNumber = -99;
 	nLeptons = 0;
 	nMuons = 0;
 	leadPt_mu = -99;
@@ -336,9 +337,7 @@ void leptonHandler::checkCategoryCuts()
 			if (leadCharge_mu*subCharge_mu == -1)
       			 //passDLCuts_mu = true;
       			 passDLCuts_mu = true && (ev->RecoLepID==13) ; //&& ev->GoodFirstPV && ev-> passMETFilters;
-				if(nMuons > 1){
-					passMultiMuons = nMuons;
-				}
+				 MuonExtraNumber = nMuons - 2;
 	}
 
   	// ###   DL ee   ###
@@ -351,9 +350,7 @@ void leptonHandler::checkCategoryCuts()
 			if (leadCharge_el*subCharge_el == -1)
       			 //passDLCuts_el = true;
       			passDLCuts_el = true && (ev->RecoLepID==11); //&& ev->GoodFirstPV && ev-> passMETFilters;
-				if(nMuons > 1){
-					passMultiMuons = nMuons;
-				}
+				MuonExtraNumber = nMuons - 0;
 	}
 
 
@@ -367,9 +364,7 @@ void leptonHandler::checkCategoryCuts()
 			if (leadCharge_mu*leadCharge_el == -1 )
       			//passDLCuts_emu = true;
       			passDLCuts_emu = true && (ev->RecoLepID==1311 || ev->RecoLepID==1113);// && ev->GoodFirstPV && ev-> passMETFilters;
-				if(nMuons > 1){
-					passMultiMuons = nMuons;
-				}
+				MuonExtraNumber = nMuons - 1;
   	}
 
 
