@@ -3,7 +3,9 @@
 
 leptonHandler::leptonHandler()
 {
-	LepLep_deltaR = -1;
+	passDeltaRZone0 = false;
+	passDeltaRZone1 = false;
+	passDeltaRZone2 = false;
     era_=0;
 	passSLCuts_el = false;
 	passSLCuts_mu = false;
@@ -329,7 +331,7 @@ void leptonHandler::checkCategoryCuts()
   	if (nElectrons == 1 && nMuons == 0)
     		// passSLCuts_el = true;
     		passSLCuts_el = true && ev->GoodFirstPV && ev-> passMETFilters;
-
+	// std::cout<<"ev->RecoLepID: "<<ev->RecoLepID<<endl;
   	// ###   DL mumu   ###
   	if ((ev->RecoLepID == 13) || ((ev->RecoLepID > 31300) && (ev->RecoLepID <= 31399)) || ((ev->RecoLepID > 41300) && (ev->RecoLepID <= 41399))){	
   	// if ( (nMuons==2 && nElectrons==0)){
@@ -339,14 +341,27 @@ void leptonHandler::checkCategoryCuts()
 			// if (leadCharge_mu*subCharge_mu == -1)
       			 //passDLCuts_mu = true;
       			 passDLCuts_mu = true; //&& ev->GoodFirstPV && ev-> passMETFilters;
-				 MuonExtraNumber = nMuons - 2;
-				 ElectronExtraNumber = nElectrons -0;
+				 MuonExtraNumber = ev->nMuon - 2;
+				 ElectronExtraNumber = ev->nElectron - 0;			
+				//  if (MuonExtraNumber > 0){
+				// 	cout<<"aehooooooo"<<endl;
+				//  }
 				 LepLep_deltaR = ev->LepLep_deltaR;
+				 if (LepLep_deltaR>0.3 && LepLep_deltaR <=0.8){
+					passDeltaRZone0 = true;
+				 }
+				 if (LepLep_deltaR>=0.8 && LepLep_deltaR <2){
+					passDeltaRZone1 = true;
+				 }
+				 if (LepLep_deltaR>=2){
+					passDeltaRZone2 = true;
+				 }
 	}
 
   	// ###   DL ee   ###
   	// VERSÃO ANTERIOR: if ( (nMuons==0 && nElectrons==2) && leadPt_el >= 25 && subPt_el >= 20){
 	if ((ev->RecoLepID == 11) || ((ev->RecoLepID > 31100) && (ev->RecoLepID <= 31199)) || ((ev->RecoLepID > 41100) && (ev->RecoLepID <= 41199))){
+ 
  
   	// if ( nMuons==0 && nElectrons==2){
     		//mll = calculateDileptonMass(leadIndex_el, subIndex_el);
@@ -356,9 +371,21 @@ void leptonHandler::checkCategoryCuts()
 			// if (leadCharge_el*subCharge_el == -1)
       			 //passDLCuts_el = true;
       			passDLCuts_el = true; //&& ev->GoodFirstPV && ev-> passMETFilters;
-				MuonExtraNumber = nMuons - 0;
-				ElectronExtraNumber = nElectrons - 2;
+				MuonExtraNumber = ev->nMuon - 0;
+				ElectronExtraNumber = ev->nElectron - 2;
+				// 	if (ElectronExtraNumber > 0){
+				// 	std::cout<<"foi"<<endl;
+				// }
 				LepLep_deltaR = ev->LepLep_deltaR;
+				 if (LepLep_deltaR>0.3 && LepLep_deltaR <=0.8){
+					passDeltaRZone0 = true;
+				 }
+				 if (LepLep_deltaR>=0.8 && LepLep_deltaR <2){
+					passDeltaRZone1 = true;
+				 }
+				 if (LepLep_deltaR>=2){
+					passDeltaRZone2 = true;
+				 }
 	}
 
 
@@ -371,9 +398,18 @@ void leptonHandler::checkCategoryCuts()
     	//	if (leadCharge_mu*leadCharge_el == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="emu")) ) )
 			// if (leadCharge_mu*leadCharge_el == -1 )
       			passDLCuts_emu = true;// && ev->GoodFirstPV && ev-> passMETFilters;
-				MuonExtraNumber = nMuons - 1;
-				ElectronExtraNumber = nElectrons -1;
+				MuonExtraNumber = 0;
+				ElectronExtraNumber = 0;
 				LepLep_deltaR = ev->LepLep_deltaR;
+				 if (LepLep_deltaR>0.3 && LepLep_deltaR <=0.8){
+					passDeltaRZone0 = true;
+				 }
+				 if (LepLep_deltaR>=0.8 && LepLep_deltaR <2){
+					passDeltaRZone1 = true;
+				 }
+				 if (LepLep_deltaR>=2){
+					passDeltaRZone2 = true;
+				 }
   	}
 
 
@@ -486,6 +522,9 @@ void leptonHandler::Event(EventVars* eve, bool passDebug, bool passTrigSF)
   	ev = eve;
   	isDebug = passDebug;
   	isTrigSF = passTrigSF;
+	passDeltaRZone0 = false;
+	passDeltaRZone1 = false;
+	passDeltaRZone2 = false;
   	passSLCuts_el = false;
   	passSLCuts_mu = false;
   	passDLCuts_el = false;

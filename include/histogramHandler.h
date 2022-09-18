@@ -217,11 +217,11 @@ void fillEfficiencyHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, T
 		//One extra muon
 		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_ExNumMu1",N_eff);
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_ExNumMu1",N_eff);
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumMu1",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumMu1",N_eff);
 		//Two extra muon
 		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_ExNumMu2",N_eff);
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_ExNumMu2",N_eff);
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumMu2",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.MuonExtraNumber == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumMu2",N_eff);
 		//No extra electron
 		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_ExNumEl0",N_eff);
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_ExNumEl0",N_eff);
@@ -229,11 +229,26 @@ void fillEfficiencyHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, T
 		//One extra electron
 		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_ExNumEl1",N_eff);
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_ExNumEl1",N_eff);
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumEl1",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumEl1",N_eff);
 		//Two extra electron
 		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_ExNumEl2",N_eff);
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_ExNumEl2",N_eff);
-		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumEl2",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.ElectronExtraNumber == 0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_ExNumEl2",N_eff);
+
+		//Region with LepLep_DeltaR between 0.3 and 0.8
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_DeltaRZone0",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_DeltaRZone0",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone0)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_DeltaRZone0",N_eff);
+
+		//Region with LepLep_DeltaR between 0.8 and 2
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_DeltaRZone1",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_DeltaRZone1",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone1)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_DeltaRZone1",N_eff);
+
+		//Region with LepLep_DeltaR more them 2
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_DeltaRZone2",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_DeltaRZone2",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_DeltaRZone2",N_eff);
 
 
   }
@@ -692,7 +707,22 @@ void initEfficiencyHistograms(TObjArray* array, string nameHLT, bool splitStream
 		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_ExNumEl2",era);
 		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_ExNumEl2",era);
 		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_ExNumEl2",era);
-		
+
+
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_DeltaRZone0",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_DeltaRZone0",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_DeltaRZone0",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_DeltaRZone1",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_DeltaRZone1",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_DeltaRZone1",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_DeltaRZone2",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_DeltaRZone2",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_DeltaRZone2",era);
+
+
+
+
+
 
 	}
 

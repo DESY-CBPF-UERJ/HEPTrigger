@@ -32,6 +32,9 @@ struct EventVars{
  
     int RecoLepID;
 
+    int nMuon;
+    int nElectron;
+
     bool Lep_triggers;
     bool Met_triggers;
     bool HLT_IsoMu24_ ;
@@ -128,6 +131,8 @@ typedef std::vector<EventVars> vEventVars;
 void EventVars::initialize(){
 
     RecoLepID = 0;
+    nMuon = 0;
+    nElectron = 0;
 
     Lep_triggers = false;
     Met_triggers = false;

@@ -133,7 +133,7 @@ TH2D* get2DScaleFactorDifferenceHistogram(TCanvas* c0, TH2D* h_nom, TH2D* h_nJet
 
 
 
-TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_nJetsHigh, TH2D* h_nJetsLow, TH2D* h_nPVHigh, TH2D* h_nPVLow, TH2D* h_METHigh, TH2D* h_METLow,TH2D* h_ExNumMu0,TH2D* h_ExNumMu1,TH2D* h_ExNumMu2,TH2D* h_ExNumEl0,TH2D* h_ExNumEl1,TH2D* h_ExNumEl2, string triggerSet, string variable)
+TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_nJetsHigh, TH2D* h_nJetsLow, TH2D* h_nPVHigh, TH2D* h_nPVLow, TH2D* h_METHigh, TH2D* h_METLow, string triggerSet, string variable)
 {
 
   TH2D* h_fullDiff = (TH2D*)h_nom->Clone();
@@ -156,18 +156,7 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
   h_meth->Add(h_METHigh, -1);
   TH2D* h_metl = (TH2D*)h_nom->Clone();
   h_metl->Add(h_METLow, -1);
-  TH2D* h_ExtraNumberMuon0 = (TH2D*)h_nom->Clone();
-  h_ExtraNumberMuon0->Add(h_ExNumMu0, -1);
-    TH2D* h_ExtraNumberMuon1 = (TH2D*)h_nom->Clone();
-  h_ExtraNumberMuon1->Add(h_ExNumMu1, -1);
-    TH2D* h_ExtraNumberMuon2 = (TH2D*)h_nom->Clone();
-  h_ExtraNumberMuon2->Add(h_ExNumMu2, -1);
-    TH2D* h_ExtraNumberElectron0 = (TH2D*)h_nom->Clone();
-  h_ExtraNumberElectron0->Add(h_ExNumEl0, -1);
-    TH2D* h_ExtraNumberElectron1 = (TH2D*)h_nom->Clone();
-  h_ExtraNumberElectron1->Add(h_ExNumEl1, -1);
-    TH2D* h_ExtraNumberElectron2 = (TH2D*)h_nom->Clone();
-  h_ExtraNumberElectron2->Add(h_ExNumEl2, -1);
+  
  
 
 
@@ -176,19 +165,14 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
     for(int y_b=1; y_b < h_nom->GetNbinsY()+1; y_b++) {
 
 
-      std::cout<<"Valor do h_nom: "<<h_nom->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_njh: "<<h_njh->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_njl: "<<h_njl->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_npvh: "<<h_npvh->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_npvl: "<<h_npvl->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_MEtLow: "<<h_metl->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_METHigh: "<<h_meth->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_ExtraNumberMuon0: "<<h_ExtraNumberMuon0->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_ExtraNumberMuon1: "<<h_ExtraNumberMuon1->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_ExtraNumberMuon2: "<<h_ExtraNumberMuon2->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_ExtraNumberElectron0: "<<h_ExtraNumberElectron0->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_ExtraNumberElectron1: "<<h_ExtraNumberElectron1->GetBinContent(x_b, y_b)<<endl;
-      std::cout<<"Valor do h_ExtraNumberElectron2: "<<h_ExtraNumberElectron2->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_nom: "<<h_nom->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_njh: "<<h_njh->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_njl: "<<h_njl->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_npvh: "<<h_npvh->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_npvl: "<<h_npvl->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_MEtLow: "<<h_metl->GetBinContent(x_b, y_b)<<endl;
+      // std::cout<<"Valor do h_METHigh: "<<h_meth->GetBinContent(x_b, y_b)<<endl;
+
 
 
       if( abs(h_njh->GetBinContent(x_b, y_b)) > abs(h_fullDiff->GetBinContent(x_b, y_b))) {
@@ -221,7 +205,7 @@ TH2D* get2DScaleFactorDifferenceHistogram_v2(TCanvas* c0, TH2D* h_nom, TH2D* h_n
 	h_fullDiff->SetBinError  (x_b, y_b, h_metl->GetBinError(x_b, y_b));
       } // end if statement for MET low
 
-    cout<<"h_fullDiff(x_b, y_b) "<<abs(h_fullDiff->GetBinContent(x_b, y_b))<<endl;
+    // cout<<"h_fullDiff(x_b, y_b) "<<abs(h_fullDiff->GetBinContent(x_b, y_b))<<endl;
     } // y_b loop
   } // x_b loop
 
@@ -276,12 +260,16 @@ TH2D* make2DSFwithSysts(TCanvas* c0, TObjArray* array, string triggerSet, string
   TH2D* h_highNPV   = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_NPVHIGH.root").c_str()))->Get( hist.c_str() );
   TH2D* h_lowMET    = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_METLOW.root").c_str()))->Get( hist.c_str() );
   TH2D* h_highMET   = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_METHIGH.root").c_str()))->Get( hist.c_str() );
-  TH2D* h_ExNumMu0      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_ExNumMu0.root").c_str()))->Get( hist.c_str() );
-  TH2D* h_ExNumMu1      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_ExNumMu1.root").c_str()))->Get( hist.c_str() );
-  TH2D* h_ExNumMu2      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_ExNumMu2.root").c_str()))->Get( hist.c_str() );
-  TH2D* h_ExNumEl0      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_ExNumEl0.root").c_str()))->Get( hist.c_str() );
-  TH2D* h_ExNumEl1      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_ExNumEl1.root").c_str()))->Get( hist.c_str() );
-  TH2D* h_ExNumEl2      = (TH2D*) ((TFile*)array->FindObject((path+"/TriggerSFs_2018_ExNumEl2.root").c_str()))->Get( hist.c_str() );
+
+  TH2D* h_ExNumMu0      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_ExNumMu0.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_ExNumMu1      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_ExNumMu1.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_ExNumMu2      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_ExNumMu2.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_ExNumEl0      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_ExNumEl0.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_ExNumEl1      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_ExNumEl1.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_ExNumEl2      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_ExNumEl2.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_DeltaRZone0      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_DeltaRZone0.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_DeltaRZone1      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_DeltaRZone1.root").c_str()))->Get( hist.c_str() );
+  TH2D* h_DeltaRZone2      = (TH2D*) ((TFile*)array->FindObject((path+"/Systematic_uncertain_DeltaRZone2.root").c_str()))->Get( hist.c_str() );
   
 
 
@@ -329,7 +317,7 @@ TH2D* make2DSFwithSysts(TCanvas* c0, TObjArray* array, string triggerSet, string
 
   // *** C. first get max diff of high/low nJets/nPV w.r.t. nominal
   //TH2D* syst_highLowNjetsNPV = get2DScaleFactorDifferenceHistogram(c0, h_nom, h_highNjets, h_lowNjets, h_highNPV, h_lowNPV, triggerSet, variable);
-  TH2D* syst_highLowNjetsNPVMET = get2DScaleFactorDifferenceHistogram_v2(c0, h_nom, h_highNjets, h_lowNjets, h_highNPV, h_lowNPV, h_highMET, h_lowMET,h_ExNumMu0,h_ExNumMu1,h_ExNumMu2,h_ExNumEl0,h_ExNumEl1,h_ExNumEl2, triggerSet, variable);
+  TH2D* syst_highLowNjetsNPVMET = get2DScaleFactorDifferenceHistogram_v2(c0, h_nom, h_highNjets, h_lowNjets, h_highNPV, h_lowNPV, h_highMET, h_lowMET, triggerSet, variable);
 
   std::cout<<"Histograma: "<<(variable + "_withSysts").c_str()<<endl;
   // *** D. then calculate full error envelope
@@ -338,6 +326,17 @@ TH2D* make2DSFwithSysts(TCanvas* c0, TObjArray* array, string triggerSet, string
     for(int y_b=1; y_b < nom_with_systs->GetNbinsY()+1; y_b++) {
       std::cout<<"Valor da incerteza dos periodos ("<<x_b<<","<<y_b<<"):"<<syst_periodDep->GetBinContent(x_b, y_b)<<endl;
       std::cout<<"Valor da incerteza das regiões ("<<x_b<<","<<y_b<<"):"<<syst_highLowNjetsNPVMET->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região ExNumMu0 ("<<x_b<<","<<y_b<<"):"<<h_ExNumMu0->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região ExNumMu1 ("<<x_b<<","<<y_b<<"):"<<h_ExNumMu1->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região ExNumMu2 ("<<x_b<<","<<y_b<<"):"<<h_ExNumMu2->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região ExNumEl0 ("<<x_b<<","<<y_b<<"):"<<h_ExNumEl0->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região ExNumEl1 ("<<x_b<<","<<y_b<<"):"<<h_ExNumEl1->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região ExNumEl2 ("<<x_b<<","<<y_b<<"):"<<h_ExNumEl2->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região DeltaRZona0 ("<<x_b<<","<<y_b<<"):"<<h_DeltaRZone0->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região DeltaRZona1 ("<<x_b<<","<<y_b<<"):"<<h_DeltaRZone1->GetBinContent(x_b, y_b)<<endl;
+      std::cout<<"Valor da incerteza da região DeltaRZona2 ("<<x_b<<","<<y_b<<"):"<<h_DeltaRZone2->GetBinContent(x_b, y_b)<<endl;
+
+      
       //binError = sqrt( nom_with_systs->GetBinError(x_b, y_b)*nom_with_systs->GetBinError(x_b, y_b) + syst_periodDep->GetBinContent(x_b, y_b)*syst_periodDep->GetBinContent(x_b, y_b) + syst_highLowNjetsNPV->GetBinContent(x_b, y_b)*syst_highLowNjetsNPV->GetBinContent(x_b, y_b) + totalCorrelationBinError*totalCorrelationBinError);
       ///binError = sqrt( nom_with_systs->GetBinError(x_b, y_b)*nom_with_systs->GetBinError(x_b, y_b) + syst_periodDep->GetBinContent(x_b, y_b)*syst_periodDep->GetBinContent(x_b, y_b) + syst_highLowNjetsNPVMET->GetBinContent(x_b, y_b)*syst_highLowNjetsNPVMET->GetBinContent(x_b, y_b) + totalCorrelationBinError*totalCorrelationBinError);
       binError = sqrt(syst_periodDep->GetBinContent(x_b, y_b)*syst_periodDep->GetBinContent(x_b, y_b) + syst_highLowNjetsNPVMET->GetBinContent(x_b, y_b)*syst_highLowNjetsNPVMET->GetBinContent(x_b, y_b) + totalCorrelationBinError*totalCorrelationBinError);
@@ -443,13 +442,16 @@ void systCombiner(string path)
   TFile *f_highNPV   = new TFile((path+"/TriggerSFs_2018_NPVHIGH.root").c_str(), "READ");
   TFile *f_lowMET    = new TFile((path+"/TriggerSFs_2018_METLOW.root").c_str(), "READ");
   TFile *f_highMET   = new TFile((path+"/TriggerSFs_2018_METHIGH.root").c_str(), "READ");
-  TFile *f_ExNumMu0   = new TFile((path+"/TriggerSFs_2018_ExNumMu0.root").c_str(), "READ");
-  TFile *f_ExNumMu1   = new TFile((path+"/TriggerSFs_2018_ExNumMu1.root").c_str(), "READ");
-  TFile *f_ExNumMu2   = new TFile((path+"/TriggerSFs_2018_ExNumMu2.root").c_str(), "READ");
-  TFile *f_ExNumEl0   = new TFile((path+"/TriggerSFs_2018_ExNumEl0.root").c_str(), "READ");
-  TFile *f_ExNumEl1   = new TFile((path+"/TriggerSFs_2018_ExNumEl1.root").c_str(), "READ");
-  TFile *f_ExNumEl2   = new TFile((path+"/TriggerSFs_2018_ExNumEl2.root").c_str(), "READ");
+  TFile *f_ExNumMu0   = new TFile((path+"/Systematic_uncertain_ExNumMu0.root").c_str(), "READ");
+  TFile *f_ExNumMu1   = new TFile((path+"/Systematic_uncertain_ExNumMu1.root").c_str(), "READ");
+  TFile *f_ExNumMu2   = new TFile((path+"/Systematic_uncertain_ExNumMu2.root").c_str(), "READ");
+  TFile *f_ExNumEl0   = new TFile((path+"/Systematic_uncertain_ExNumEl0.root").c_str(), "READ");
+  TFile *f_ExNumEl1   = new TFile((path+"/Systematic_uncertain_ExNumEl1.root").c_str(), "READ");
+  TFile *f_ExNumEl2   = new TFile((path+"/Systematic_uncertain_ExNumEl2.root").c_str(), "READ");
 
+  TFile *f_DeltaRZone0   = new TFile((path+"/Systematic_uncertain_DeltaRZone0.root").c_str(), "READ");
+  TFile *f_DeltaRZone1   = new TFile((path+"/Systematic_uncertain_DeltaRZone1.root").c_str(), "READ");
+  TFile *f_DeltaRZone2   = new TFile((path+"/Systematic_uncertain_DeltaRZone2.root").c_str(), "READ");
   //  TFile *f_outSysts  = new TFile( (path+"/tt_dileptonic_2DscaleFactors_withSysts_2016BCDEFGH_"+date+".root").c_str(), "RECREATE");
   // TFile *f_outSysts  = new TFile( ("tt_dileptonic_2DscaleFactors_withSysts_2017BCDEF_"+date+".root").c_str(), "RECREATE");
   TFile *f_outSysts  = new TFile( ("tt_dileptonic_2DscaleFactors_withSysts_2018ABCD_"+date+".root").c_str(), "RECREATE");
@@ -472,6 +474,9 @@ void systCombiner(string path)
   f_infiles->AddLast(f_ExNumEl0);
   f_infiles->AddLast(f_ExNumEl1);
   f_infiles->AddLast(f_ExNumEl2);
+  f_infiles->AddLast(f_DeltaRZone0);
+  f_infiles->AddLast(f_DeltaRZone1);
+  f_infiles->AddLast(f_DeltaRZone2);
 
 
   // *** 2. Get Histograms
