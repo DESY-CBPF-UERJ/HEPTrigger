@@ -331,14 +331,14 @@ void leptonHandler::checkCategoryCuts()
     		passSLCuts_el = true && ev->GoodFirstPV && ev-> passMETFilters;
 
   	// ###   DL mumu   ###
-  	// if ( (nMuons==2 && nElectrons==0) && leadPt_mu >= 25 && subPt_mu >= 15){
-  	if ( (nMuons==2 && nElectrons==0)){
+  	if ((ev->RecoLepID == 13) || ((ev->RecoLepID > 31300) && (ev->RecoLepID <= 31399)) || ((ev->RecoLepID > 41300) && (ev->RecoLepID <= 41399))){	
+  	// if ( (nMuons==2 && nElectrons==0)){
     		//mll = calculateDileptonMass(leadIndex_mu, subIndex_mu);
     		// if (mll > 20 && (mll < 76 || mll > 106) && leadCharge_mu*subCharge_mu == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="mumu")) ) )
     	//	if (leadCharge_mu*subCharge_mu == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="mumu")) ) )
-			if (leadCharge_mu*subCharge_mu == -1)
+			// if (leadCharge_mu*subCharge_mu == -1)
       			 //passDLCuts_mu = true;
-      			 passDLCuts_mu = true && (ev->RecoLepID==13) ; //&& ev->GoodFirstPV && ev-> passMETFilters;
+      			 passDLCuts_mu = true; //&& ev->GoodFirstPV && ev-> passMETFilters;
 				 MuonExtraNumber = nMuons - 2;
 				 ElectronExtraNumber = nElectrons -0;
 				 LepLep_deltaR = ev->LepLep_deltaR;
@@ -346,14 +346,16 @@ void leptonHandler::checkCategoryCuts()
 
   	// ###   DL ee   ###
   	// VERSÃO ANTERIOR: if ( (nMuons==0 && nElectrons==2) && leadPt_el >= 25 && subPt_el >= 20){
-  	if ( nMuons==0 && nElectrons==2){
+	if ((ev->RecoLepID == 11) || ((ev->RecoLepID > 31100) && (ev->RecoLepID <= 31199)) || ((ev->RecoLepID > 41100) && (ev->RecoLepID <= 41199))){
+ 
+  	// if ( nMuons==0 && nElectrons==2){
     		//mll = calculateDileptonMass(leadIndex_el, subIndex_el);
 
     		//VERSÃO ANTERIOR: if (mll > 20 && leadCharge_el*subCharge_el == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="ee")) ) )
     	//	if (leadCharge_el*subCharge_el == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="ee")) ) )
-			if (leadCharge_el*subCharge_el == -1)
+			// if (leadCharge_el*subCharge_el == -1)
       			 //passDLCuts_el = true;
-      			passDLCuts_el = true && (ev->RecoLepID==11); //&& ev->GoodFirstPV && ev-> passMETFilters;
+      			passDLCuts_el = true; //&& ev->GoodFirstPV && ev-> passMETFilters;
 				MuonExtraNumber = nMuons - 0;
 				ElectronExtraNumber = nElectrons - 2;
 				LepLep_deltaR = ev->LepLep_deltaR;
@@ -362,14 +364,13 @@ void leptonHandler::checkCategoryCuts()
 
   	// ###   DL emu   ###
   	// if ( (nMuons==1 && nElectrons==1) && ((leadPt_mu >= 25 && leadPt_el >= 15) || (leadPt_el >= 25 && leadPt_mu >= 15)) ){
-  	if ( (nMuons==1 && nElectrons==1) ){
-    		//mll = calculateDileptonMass(leadIndex_mu, leadIndex_el);
+  	if (ev->RecoLepID==1311 || ev->RecoLepID==1113){
+	// if ( (nMuons==1 && nElectrons==1) ){
     		if(isDebug)
       			cout << "Event " << ev->evt << " , leadCharge_mu " << leadCharge_mu << " , leadCharge_el " << leadCharge_el << endl;
     	//	if (leadCharge_mu*leadCharge_el == -1 && (isMC || (!isMC && (dataStream=="" || dataStream=="emu")) ) )
-			if (leadCharge_mu*leadCharge_el == -1 )
-      			//passDLCuts_emu = true;
-      			passDLCuts_emu = true && (ev->RecoLepID==1311 || ev->RecoLepID==1113);// && ev->GoodFirstPV && ev-> passMETFilters;
+			// if (leadCharge_mu*leadCharge_el == -1 )
+      			passDLCuts_emu = true;// && ev->GoodFirstPV && ev-> passMETFilters;
 				MuonExtraNumber = nMuons - 1;
 				ElectronExtraNumber = nElectrons -1;
 				LepLep_deltaR = ev->LepLep_deltaR;
