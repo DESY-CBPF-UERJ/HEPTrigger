@@ -161,6 +161,11 @@ TObjArray* a_DoubleMu_OR__X__allMET_DeltaRZone2 = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_DeltaRZone2 = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_DeltaRZone2 = new TObjArray();
 
+TObjArray* a_DoubleMu_OR__X__allMET_DeltaRZone3 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_DeltaRZone3 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_DeltaRZone3 = new TObjArray();
+
+
 
 
 

@@ -41,6 +41,7 @@ class leptonHandler{
       bool passDeltaRZone0;  // Region with DeltaR between 0.3 and 0.8
       bool passDeltaRZone1;  // Region with DeltaR between 0.8 and 2
       bool passDeltaRZone2;  // Region with DeltaR more then 2
+      bool passDeltaRZone3;  // Region with DeltaR less then 0.3
       bool passSLCuts_el;
       bool passSLCuts_mu;
       bool passDLCuts_el;

@@ -250,6 +250,11 @@ void fillEfficiencyHistograms(leptonHandler lepTool, jetMetHandler jetMetTool, T
 		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_DeltaRZone2",N_eff);
 		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone2)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_DeltaRZone2",N_eff);
 
+		//Region with LepLep_DeltaR less then 0.3
+		if ( lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone3)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "elStreamDL_DeltaRZone3",N_eff);
+		if ( lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone3)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "muStreamDL_DeltaRZone3",N_eff);
+		if ( lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts && (lepTool.passDeltaRZone3)) fillHistogramsByStream( lepTool, jetMetTool, array, nameHLT, filename, "emuStreamDL_DeltaRZone3",N_eff);
+
 
   }
 }
@@ -718,6 +723,9 @@ void initEfficiencyHistograms(TObjArray* array, string nameHLT, bool splitStream
 		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_DeltaRZone2",era);
 		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_DeltaRZone2",era);
 		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_DeltaRZone2",era);
+		createEfficiencyHistograms(array, nameHLT, "_elStreamDL_DeltaRZone3",era);
+		createEfficiencyHistograms(array, nameHLT, "_muStreamDL_DeltaRZone3",era);
+		createEfficiencyHistograms(array, nameHLT, "_emuStreamDL_DeltaRZone3",era);
 
 
 

@@ -257,6 +257,10 @@ void trigEffStudy(string p_topDir="", string p_isMC="", string p_passFile="", st
     initializeHistograms(a_DoubleEl_OR__X__allMET_DeltaRZone2, "DoubleEl_OR__X__allMET_DeltaRZone2",false,era);
     initializeHistograms(a_EMu_OR__X__allMET_DeltaRZone2, "EMu_OR__X__allMET_DeltaRZone2",false,era);
 
+	initializeHistograms(a_DoubleMu_OR__X__allMET_DeltaRZone3, "DoubleMu_OR__X__allMET_DeltaRZone3",false,era);
+    initializeHistograms(a_DoubleEl_OR__X__allMET_DeltaRZone3, "DoubleEl_OR__X__allMET_DeltaRZone3",false,era);
+    initializeHistograms(a_EMu_OR__X__allMET_DeltaRZone3, "EMu_OR__X__allMET_DeltaRZone3",false,era);
+
 
 
 
@@ -541,6 +545,14 @@ void trigEffStudy(string p_topDir="", string p_isMC="", string p_passFile="", st
                 // dilepton, emu
                 if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && (lepTool.passDeltaRZone2) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_EMu_OR__X__allMET_DeltaRZone2, "EMu_OR__X__allMET_DeltaRZone2", p_passFile.c_str(),false,false);
  
+ 				//Region with DeltaR more then 2
+                // dilepton, ee
+                if ((lepTool.passSLtriggers_el || lepTool.passDLtriggers_el) && (lepTool.passDeltaRZone3) && lepTool.passDLCuts_el && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_DoubleEl_OR__X__allMET_DeltaRZone3, "DoubleEl_OR__X__allMET_DeltaRZone3", p_passFile.c_str(),false,false);
+                // dilepton, mumu
+                if ((lepTool.passSLtriggers_mu || lepTool.passDLtriggers_mu) && (lepTool.passDeltaRZone3) && lepTool.passDLCuts_mu && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_DoubleMu_OR__X__allMET_DeltaRZone3, "DoubleMu_OR__X__allMET_DeltaRZone3", p_passFile.c_str(),false,false);
+                // dilepton, emu
+                if ((lepTool.passSLtriggers_el || lepTool.passSLtriggers_mu || lepTool.passDLtriggers_emu) && (lepTool.passDeltaRZone3) && lepTool.passDLCuts_emu && jetMetTool.passDLJetMetCuts  && jetMetTool.passAllMETTriggers) fillEfficiencyHistograms(lepTool, jetMetTool, a_EMu_OR__X__allMET_DeltaRZone3, "EMu_OR__X__allMET_DeltaRZone3", p_passFile.c_str(),false,false);
+ 
 
 
 
@@ -663,6 +675,12 @@ void trigEffStudy(string p_topDir="", string p_isMC="", string p_passFile="", st
 	makeEfficiencyHistograms( c0, a_DoubleMu_OR__X__allMET_DeltaRZone2, "DoubleMu_OR__X__allMET_DeltaRZone2", a_HLT_allMET, "HLT_allMET_muStreamDL_DeltaRZone2");
     makeEfficiencyHistograms( c0, a_DoubleEl_OR__X__allMET_DeltaRZone2, "DoubleEl_OR__X__allMET_DeltaRZone2", a_HLT_allMET, "HLT_allMET_elStreamDL_DeltaRZone2");
     makeEfficiencyHistograms( c0, a_EMu_OR__X__allMET_DeltaRZone2, "EMu_OR__X__allMET_DeltaRZone2", a_HLT_allMET, "HLT_allMET_emuStreamDL_DeltaRZone2");
+
+	// //region 3 LepLep_deltaR
+
+	makeEfficiencyHistograms( c0, a_DoubleMu_OR__X__allMET_DeltaRZone3, "DoubleMu_OR__X__allMET_DeltaRZone3", a_HLT_allMET, "HLT_allMET_muStreamDL_DeltaRZone3");
+    makeEfficiencyHistograms( c0, a_DoubleEl_OR__X__allMET_DeltaRZone3, "DoubleEl_OR__X__allMET_DeltaRZone3", a_HLT_allMET, "HLT_allMET_elStreamDL_DeltaRZone3");
+    makeEfficiencyHistograms( c0, a_EMu_OR__X__allMET_DeltaRZone3, "EMu_OR__X__allMET_DeltaRZone3", a_HLT_allMET, "HLT_allMET_emuStreamDL_DeltaRZone3");
 
 
 	

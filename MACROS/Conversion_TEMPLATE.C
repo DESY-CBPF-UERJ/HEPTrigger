@@ -138,7 +138,7 @@ void list_files(vector<int> *ch1,const char *dirname,double & DATA_LUMI,double &
     double SUM_GEN_WGT = 0;
     vector<int> index;
     //const char dirname[75] = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files";
-    const char dirname[75] = "/home/matheus/cernbox/HHDM/DESY/Data_MET_D_17_files";
+    const char dirname[75] = "/home/matheus/cernbox/HHDM/DESY/@-@";
     //const char dirname[75] = "/home/matheus/Desktop/TChain/Data_MET_G_16_files";
     //const char dirname[75] = "/home/matheus/Desktop/TChain/Data_MET_H_16_files";
     
@@ -172,7 +172,7 @@ void list_files(vector<int> *ch1,const char *dirname,double & DATA_LUMI,double &
 
 
 //TFile *newfile= new TFile("/home/matheus/Desktop/TChain/MCttbar.root","recreate");                      //Crio um Arquivo com nome MCttbar
-TFile *newfile= new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2017/Run2017D.root","recreate");                      //Crio um Arquivo com nome Data_F
+TFile *newfile= new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/@--@/@---@.root","recreate");                      //Crio um Arquivo com nome Data_F
 //TFile *newfile= new TFile("/home/matheus/Desktop/TChain/Data_G.root","recreate");                      //Crio um Arquivo com nome Data_G
 //TFile *newfile= new TFile("/home/matheus/Desktop/TChain/Data_H.root","recreate");                      //Crio um Arquivo com nome Data_H
 // TDirectory* cdttTreeMaker=newfile->mkdir("ttTreeMaker");				   //Crio uma pasta dentro dele chamada "ttTreeMaker"
@@ -191,8 +191,9 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 
 
   // Declaration of leaf types
-     Float_t        LepLep_deltaR;
-
+    Int_t           nMuon;
+    Int_t           nElectron;
+   Float_t        LepLep_deltaR;
    Double_t        evtWeight;
    Double_t        Lep_leading_pt;
    Double_t        Lep_leading_eta;
@@ -278,8 +279,9 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 
 
 
+   ch1.SetBranchAddress("nMuon",&nMuon);
+   ch1.SetBranchAddress("nElectron",&nElectron);
    ch1.SetBranchAddress("LepLep_deltaR",&LepLep_deltaR);
-
    ch1.SetBranchAddress("evtWeight", &evtWeight);
    ch1.SetBranchAddress("Lep_leading_pt", &Lep_leading_pt);
    ch1.SetBranchAddress("Lep_leading_eta", &Lep_leading_eta);
@@ -377,8 +379,10 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	for(Int_t i=0;i<n;i++){
 		ch1.GetEntry(i);
 		
-        if (RecoLepID == 11 || RecoLepID == 13 || RecoLepID == 1113 || RecoLepID == 1311){
+        // if (RecoLepID == 11 || RecoLepID == 13 || RecoLepID == 1113 || RecoLepID == 1311){
             eve->LepLep_deltaR = LepLep_deltaR;
+            eve->nMuon = nMuon;
+            eve->nElectron = nElectron;
             eve->puSF = 1.;
             eve->run = run_;
 		    eve->lumi = lumi_;
@@ -395,9 +399,6 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
                 eve->evtWeight = evtWeight*ajuste_no_peso;
             }
             
-
-
-
             eve->Lep_triggers = Lep_triggers;
             eve->Met_triggers = Met_triggers;
             eve->RecoLepID = RecoLepID;
@@ -534,7 +535,7 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	    eve->lepton_recoIsoSF  = lepton_recoIsoSF_2;
 	    eve->lepton_energyCorr  = lepton_energyCorr_2;
 
-        }
+        // }
 
 		convertedTree->Fill();
 	}

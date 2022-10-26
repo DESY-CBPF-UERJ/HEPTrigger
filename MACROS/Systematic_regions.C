@@ -50,6 +50,16 @@ TH2D* Get_data(TString hist,string Tag_region, string year){
 
     	TH2D* h2_fullDiff = (TH2D*)h_default->Clone();
     	h2_fullDiff->Add(h_new, -1);
+         for (int i =1; i < h_default->GetNbinsX()+1; i++){
+    		for (int j =1; j < h_default->GetNbinsY()+1; j++){
+                        if (h_new->GetBinContent(i,j) == 0){
+                                h2_fullDiff->SetBinContent(i,j,h_new->GetBinContent(i,j));
+                        }
+                        if (h_default->GetBinContent(i,j) == 0){
+                                h2_fullDiff->SetBinContent(i,j,h_default->GetBinContent(i,j));
+                        }
+                }
+         }
   	return h2_fullDiff; //Return the difference between teh region and the default
 }
 

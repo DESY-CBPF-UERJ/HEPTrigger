@@ -31,10 +31,8 @@ struct EventVars{
   explicit EventVars(){ };
  
     int RecoLepID;
-
     int nMuon;
     int nElectron;
-
     bool Lep_triggers;
     bool Met_triggers;
     bool HLT_IsoMu24_ ;
@@ -71,10 +69,6 @@ struct EventVars{
     bool HLT_PFHT700_PFMET85_PFMHT85_IDTight_;
     bool HLT_PFHT800_PFMET75_PFMHT75_IDTight_;
     bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60_;
-
-
-
-
    bool passMETFilters;
   
   double evtWeight;
@@ -83,7 +77,7 @@ struct EventVars{
   long evt;
 
 
-  float LepLep_deltaR;
+  float  LepLep_deltaR;
   float   puSF;
   bool    GoodFirstPV;
   Int_t   numPVs;
@@ -130,9 +124,9 @@ typedef std::vector<EventVars> vEventVars;
 
 void EventVars::initialize(){
 
-    RecoLepID = 0;
-    nMuon = 0;
-    nElectron = 0;
+    RecoLepID = 1;
+    nMuon = 1;
+    nElectron = 1;
 
     Lep_triggers = false;
     Met_triggers = false;
@@ -174,7 +168,7 @@ void EventVars::initialize(){
     passMETFilters = false;
 
 //////////////////////////////////////////////////////
-  evtWeight = 0;
+  evtWeight = 1;
 ////////////////////////////////////////////////////
    run  = -99;
   lumi = -99;
@@ -184,7 +178,7 @@ void EventVars::initialize(){
   numPVs = -99;
   genweight = -999.;
 
-  LepLep_deltaR = -1;
+  LepLep_deltaR = -99.;
 
   lepton_isMuon.clear();
   lepton_charge.clear();

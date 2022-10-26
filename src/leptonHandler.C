@@ -6,6 +6,7 @@ leptonHandler::leptonHandler()
 	passDeltaRZone0 = false;
 	passDeltaRZone1 = false;
 	passDeltaRZone2 = false;
+	passDeltaRZone3 = false;
     era_=0;
 	passSLCuts_el = false;
 	passSLCuts_mu = false;
@@ -356,6 +357,9 @@ void leptonHandler::checkCategoryCuts()
 				 if (LepLep_deltaR>=2){
 					passDeltaRZone2 = true;
 				 }
+				 if (LepLep_deltaR <= 0.3){
+					passDeltaRZone3 = true;
+				 }
 	}
 
   	// ###   DL ee   ###
@@ -386,6 +390,9 @@ void leptonHandler::checkCategoryCuts()
 				 if (LepLep_deltaR>=2){
 					passDeltaRZone2 = true;
 				 }
+				if (LepLep_deltaR <= 0.3){
+					passDeltaRZone3 = true;
+				 }
 	}
 
 
@@ -409,6 +416,9 @@ void leptonHandler::checkCategoryCuts()
 				 }
 				 if (LepLep_deltaR>=2){
 					passDeltaRZone2 = true;
+				 }
+				if (LepLep_deltaR <= 0.3){
+					passDeltaRZone3 = true;
 				 }
   	}
 
@@ -525,6 +535,7 @@ void leptonHandler::Event(EventVars* eve, bool passDebug, bool passTrigSF)
 	passDeltaRZone0 = false;
 	passDeltaRZone1 = false;
 	passDeltaRZone2 = false;
+	passDeltaRZone3 = false;
   	passSLCuts_el = false;
   	passSLCuts_mu = false;
   	passDLCuts_el = false;
