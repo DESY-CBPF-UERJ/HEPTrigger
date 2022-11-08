@@ -37,6 +37,11 @@ class leptonHandler{
       void Event(EventVars* eve, bool passDebug, bool passTrigSF);
 
       // === Variables === //
+      float LepLep_deltaR;
+      bool passDeltaRZone0;  // Region with DeltaR between 0.3 and 0.8
+      bool passDeltaRZone1;  // Region with DeltaR between 0.8 and 2
+      bool passDeltaRZone2;  // Region with DeltaR more then 2
+      bool passDeltaRZone3;  // Region with DeltaR less then 0.3
       bool passSLCuts_el;
       bool passSLCuts_mu;
       bool passDLCuts_el;
@@ -75,7 +80,9 @@ class leptonHandler{
       bool b_periodDep__HLT_IsoMu24_eta2p1;
       bool b_periodDep__doubleMu_noMass;
       bool b_periodDep__doubleMu_withMass;
-      int passMultiMuons;
+      // int passMultiMuons;
+      int MuonExtraNumber;
+      int ElectronExtraNumber;
       int leadIndex_el;
       int subIndex_el;
       int leadIndex_mu;
@@ -103,7 +110,7 @@ class leptonHandler{
       void applyElectronCuts();
       void checkHLTTriggers();
       void checkCategoryCuts();
-      void setLeadSubleadIndices(int l, int& lead, int& sub);
+      void setLeadSubleadIndices(int l, int& lead, int& sub,int type);
       float calculateDileptonMass(int index_lead, int index_sub);
 
       // === Variables === //

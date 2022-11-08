@@ -1,0 +1,6 @@
+outputs_and_plotting_script/*
+datasets/*
+TriggerFiles*
+MACROS/tt_dileptonic_2DscaleFactors_withSysts_2018ABCD_01-09-20.root
+MACROS/Final*/*.png
+JSON_files/rapidjson/*

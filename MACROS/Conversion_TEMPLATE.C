@@ -16,9 +16,8 @@
 //Tentando pegar informação dos arquivos nas pastas do TTTo2L2Nu_16_?_?, onde ? varia de 0 a 100
 //void list_files(const char *dirname="/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files", const char *ext="Tree.root") // https://root-forum.cern.ch/t/open-files-in-a-directory-with-a-for-loop/12471
 //void list_files(TChain *ch1,const char *dirname="/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files", const char *ext="Tree.root")
-void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,long double & DATA_LUMI_UNC,long double &PROC_XSEC,long double & SUM_GEN_WGT, const char *ext="Tree.root")
+void list_files(vector<int> *ch1,const char *dirname,double & DATA_LUMI,double & DATA_LUMI_UNC, double &PROC_XSEC, double & SUM_GEN_WGT, const char *ext="Tree.root")
 {
-    std::cout.precision(35);
 	int n = 9999;
     for(int i=0;i<n;i++){
         const char *d = "/home/matheus/cernbox/HHDM/DESY/";
@@ -70,7 +69,7 @@ void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,lon
                                     char parte[final];
                                     memcpy(parte, &frase[posicao], final);
                                     //printf("%s \n",parte);
-                                    DATA_LUMI = stold(parte,NULL); //stold(parte,NULL);
+                                    DATA_LUMI =  strtod(parte,NULL);
                                     //std::cout<<"luminosidade: "<<luminosidade<<endl;
                                     //printf("%s \n",frase);  
                                 }
@@ -83,7 +82,7 @@ void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,lon
                                     char parte[final];
                                     memcpy(parte, &frase[posicao], final);
                                     //printf("%s \n",parte);
-                                    DATA_LUMI_UNC =  stold(parte,NULL);
+                                    DATA_LUMI_UNC =  strtod(parte,NULL);
                                     //std::cout<<"lumi. Uncertainty:  "<<lumi_uncer<<endl;
                                     //printf("%s \n",frase);  
                                 }
@@ -96,8 +95,8 @@ void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,lon
                                     char parte[final];
                                     memcpy(parte, &frase[posicao], final);
                                     //printf("%s \n",parte);
-                                    PROC_XSEC =  stold(parte,NULL);
-                                    // std::cout<<"Cross Section:  "<<PROC_XSEC<<endl;
+                                    PROC_XSEC =  strtod(parte,NULL);
+                                    //std::cout<<"Cross Section:  "<<cross_sec<<endl;
                                     //printf("%s \n",frase);  
                                 }
                                 if (contador ==11){
@@ -107,10 +106,8 @@ void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,lon
                                     int final = sizeof(frase) - posicao;
                                     char parte[final];
                                     memcpy(parte, &frase[posicao], final);
-                                    // printf("%s \n",parte);
-                                    double sum_weight =  stold(parte,NULL);
-                                    // std::cout<<"Cross Section: "<<sum_weight<<endl;
-                                    // if (sum_weight == 143942.6403808594){std::cout<<"uepa"<<endl;}
+                                    //printf("%s \n",parte);
+                                    double sum_weight =  strtod(parte,NULL);
                                     SUM_GEN_WGT += sum_weight;
                                     //printf("Printf: valor transformado em double %f \n",sum_weight);
                                     // double d_sum_weight = sum_weight*sum_weight;
@@ -135,24 +132,20 @@ void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,lon
     }
 }
 
-    long double DATA_LUMI = 0;
-    long double DATA_LUMI_UNC = 0;
-    long double PROC_XSEC = 0;
-    long double SUM_GEN_WGT = 0;
+    double DATA_LUMI = 0;
+    double DATA_LUMI_UNC = 0;
+    double PROC_XSEC = 0;
+    double SUM_GEN_WGT = 0;
     vector<int> index;
-    const char dirname[75] = "/home/matheus/cernbox/HHDM/DESY/TTTo2L2Nu_APV_16_files";
-    //const char dirname[75] = "/home/matheus/Desktop/TChain/Data_MET_F_16_files";
+    //const char dirname[75] = "/home/matheus/Desktop/TChain/TTTo2L2Nu_16_files";
+    const char dirname[75] = "/home/matheus/cernbox/HHDM/DESY/@-@";
     //const char dirname[75] = "/home/matheus/Desktop/TChain/Data_MET_G_16_files";
     //const char dirname[75] = "/home/matheus/Desktop/TChain/Data_MET_H_16_files";
     
     TChain ch1("selection"); 												   //Crio um Tchain chamado ch1, por onde vou adcionar todas as outras trees, usando o list_files
     list_files(&index,dirname,DATA_LUMI,DATA_LUMI_UNC,PROC_XSEC,SUM_GEN_WGT);														   //Pego os 100 tree.root separados entre as pastas e junto eles aqui na minha Tchain.
 
-    long double ajuste_no_peso = (PROC_XSEC/SUM_GEN_WGT) * DATA_LUMI; 
-    std::cout<<"PROC_XSEC: "<<PROC_XSEC<<endl;
-    std::cout<<"SUM_GEN_WGT: "<<SUM_GEN_WGT<<endl;
-    std::cout<<"DATA_LUMI: "<<DATA_LUMI<<endl;
-
+    double ajuste_no_peso = (PROC_XSEC/SUM_GEN_WGT) * DATA_LUMI; 
     std::cout<<"Ajuste que deve ser aplicado no evtweight dessa amostra: "<<ajuste_no_peso<<endl;
     std::cout<<index.size()<<endl;
 
@@ -179,7 +172,7 @@ void list_files(vector<int> *ch1,const char *dirname,long double & DATA_LUMI,lon
 
 
 //TFile *newfile= new TFile("/home/matheus/Desktop/TChain/MCttbar.root","recreate");                      //Crio um Arquivo com nome MCttbar
-TFile *newfile= new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_ttbarAPV.root","recreate");                      //Crio um Arquivo com nome Data_F
+TFile *newfile= new TFile("/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/@--@/@---@.root","recreate");                      //Crio um Arquivo com nome Data_F
 //TFile *newfile= new TFile("/home/matheus/Desktop/TChain/Data_G.root","recreate");                      //Crio um Arquivo com nome Data_G
 //TFile *newfile= new TFile("/home/matheus/Desktop/TChain/Data_H.root","recreate");                      //Crio um Arquivo com nome Data_H
 // TDirectory* cdttTreeMaker=newfile->mkdir("ttTreeMaker");				   //Crio uma pasta dentro dele chamada "ttTreeMaker"
@@ -196,8 +189,13 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 //convertedTree->Branch("events", "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ", HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ, 8000, 1);			   //Criando um branch chamado "events", onde nele se encontra as variaveis
 
 
-
+  //NEW BRANCHS
+  vector<float>   *v_muon_pt;
+  vector<float>   *v_electron_pt;
   // Declaration of leaf types
+    Int_t           nMuon;
+    Int_t           nElectron;
+   Float_t        LepLep_deltaR;
    Double_t        evtWeight;
    Double_t        Lep_leading_pt;
    Double_t        Lep_leading_eta;
@@ -272,18 +270,20 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
    Float_t         MET_Type1xy_phi_;
    Float_t         MET_Type1xy_sync_;
    Float_t         MET_Type1xy_phi_sync_;
-   vector<float>   *lepton_mu0_pt;
-   vector<float>   *lepton_mu0_eta;
-   vector<float>   *lepton_mu1_pt;
-   vector<float>   *lepton_mu1_eta;
-   vector<float>   *lepton_el0_pt;
-   vector<float>   *lepton_el0_eta;
-   vector<float>   *lepton_el1_pt;
-   vector<float>   *lepton_el1_eta;
+//    vector<float>   *lepton_mu0_pt;
+//    vector<float>   *lepton_mu0_eta;
+//    vector<float>   *lepton_mu1_pt;
+//    vector<float>   *lepton_mu1_eta;
+//    vector<float>   *lepton_el0_pt;
+//    vector<float>   *lepton_el0_eta;
+//    vector<float>   *lepton_el1_pt;
+//    vector<float>   *lepton_el1_eta;
 
 
 
-
+   ch1.SetBranchAddress("nMuon",&nMuon);
+   ch1.SetBranchAddress("nElectron",&nElectron);
+   ch1.SetBranchAddress("LepLep_deltaR",&LepLep_deltaR);
    ch1.SetBranchAddress("evtWeight", &evtWeight);
    ch1.SetBranchAddress("Lep_leading_pt", &Lep_leading_pt);
    ch1.SetBranchAddress("Lep_leading_eta", &Lep_leading_eta);
@@ -358,14 +358,17 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
    ch1.SetBranchAddress("MET_Type1xy_phi_", &MET_Type1xy_phi_);
    ch1.SetBranchAddress("MET_Type1xy_sync_", &MET_Type1xy_sync_);
    ch1.SetBranchAddress("MET_Type1xy_phi_sync_", &MET_Type1xy_phi_sync_);
-   ch1.SetBranchAddress("lepton_mu0_pt", &lepton_mu0_pt);
-   ch1.SetBranchAddress("lepton_mu0_eta", &lepton_mu0_eta);
-   ch1.SetBranchAddress("lepton_mu1_pt", &lepton_mu1_pt);
-   ch1.SetBranchAddress("lepton_mu1_eta", &lepton_mu1_eta);
-   ch1.SetBranchAddress("lepton_el0_pt", &lepton_el0_pt);
-   ch1.SetBranchAddress("lepton_el0_eta", &lepton_el0_eta);
-   ch1.SetBranchAddress("lepton_el1_pt", &lepton_el1_pt);
-   ch1.SetBranchAddress("lepton_el1_eta", &lepton_el1_eta);
+//    ch1.SetBranchAddress("lepton_mu0_pt", &lepton_mu0_pt);
+//    ch1.SetBranchAddress("lepton_mu0_eta", &lepton_mu0_eta);
+//    ch1.SetBranchAddress("lepton_mu1_pt", &lepton_mu1_pt);
+//    ch1.SetBranchAddress("lepton_mu1_eta", &lepton_mu1_eta);
+//    ch1.SetBranchAddress("lepton_el0_pt", &lepton_el0_pt);
+//    ch1.SetBranchAddress("lepton_el0_eta", &lepton_el0_eta);
+//    ch1.SetBranchAddress("lepton_el1_pt", &lepton_el1_pt);
+//    ch1.SetBranchAddress("lepton_el1_eta", &lepton_el1_eta);
+
+    ch1.SetBranchAddress("muon_pt",&v_muon_pt);
+    ch1.SetBranchAddress("electron_pt",&v_electron_pt);
 
 
    Long64_t n = ch1.GetEntries();
@@ -381,7 +384,10 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	for(Int_t i=0;i<n;i++){
 		ch1.GetEntry(i);
 		
-        if (RecoLepID == 11 || RecoLepID == 13 || RecoLepID == 1113 || RecoLepID == 1311){
+        // if (RecoLepID == 11 || RecoLepID == 13 || RecoLepID == 1113 || RecoLepID == 1311){
+            eve->LepLep_deltaR = LepLep_deltaR;
+            eve->nMuon = nMuon;
+            eve->nElectron = nElectron;
             eve->puSF = 1.;
             eve->run = run_;
 		    eve->lumi = lumi_;
@@ -397,14 +403,11 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
             else{
                 eve->evtWeight = evtWeight*ajuste_no_peso;
             }
-            // std::cout<<"evtWeight"<<eve->evtWeight<<endl;
-           // if (eve->evtWeight < 0){continue;}
-
+            
             eve->Lep_triggers = Lep_triggers;
             eve->Met_triggers = Met_triggers;
             eve->RecoLepID = RecoLepID;
-
-
+       
             eve->HLT_IsoMu24_= HLT_IsoMu24; 
             eve->HLT_IsoTkMu24_= HLT_IsoTkMu24; 
             eve->HLT_Mu50_= HLT_Mu50; 
@@ -476,6 +479,11 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 
 
 
+
+//ANTIGA VERSÂO=================================================================================================
+
+
+
             vfloat lepton_pt_2;
 	 	    vfloat lepton_eta_2;
 	  	    vfloat lepton_phi_2;
@@ -492,6 +500,8 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
             vint lepton_isTight_2;
         
 
+
+
             lepton_pt_2.clear();
 	        lepton_eta_2.clear();
 	        lepton_phi_2.clear();
@@ -504,6 +514,7 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	        lepton_isMuon_2.clear();
 	        lepton_isTight_2.clear();
 	        lepton_energyCorr_2.clear();
+
 
             
             for(int i=0;i<lepton_pt_->size();i++){
@@ -537,7 +548,26 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	    eve->lepton_recoIsoSF  = lepton_recoIsoSF_2;
 	    eve->lepton_energyCorr  = lepton_energyCorr_2;
 
-        }
+//ANTIGA VERSÂO=================================================================================================
+
+//NOVA VERSÂO ==================================================================================================
+
+            vfloat v_muon_pt_2;
+            vfloat v_electron_pt_2;
+
+            v_muon_pt_2.clear();
+            v_electron_pt_2.clear();
+
+            for (int i =0;i<v_muon_pt->size();i++){
+                v_muon_pt_2.push_back(v_muon_pt->at(i));
+            }
+            for (int i =0;i<v_electron_pt->size();i++){
+                v_electron_pt_2.push_back(v_electron_pt->at(i));
+            }
+
+            eve->muon_pt = v_muon_pt_2;
+            eve->electron_pt = v_electron_pt_2;
+        // }
 
 		convertedTree->Fill();
 	}

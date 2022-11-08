@@ -57,61 +57,119 @@ TObjArray* a_DoubleMu__X__allMET = new TObjArray();
 TObjArray* a_DoubleEl__X__allMET = new TObjArray();
 TObjArray* a_EMu__X__allMET = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR = new TObjArray();
-TObjArray* a_HLT_EMu_OR = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR = new TObjArray();
+// TObjArray* a_HLT_EMu_OR = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NJETSHIGH = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NJETSHIGH = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NJETSHIGH = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_NJETSHIGH = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_NJETSHIGH = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_NJETSHIGH = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_NJETSHIGH = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_NJETSHIGH = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_NJETSHIGH = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NJETSLOW = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NJETSLOW = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NJETSLOW = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_NJETSLOW = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_NJETSLOW = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_NJETSLOW = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_NJETSLOW = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_NJETSLOW = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_NJETSLOW = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NPVHIGH = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NPVHIGH = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NPVHIGH = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_NPVHIGH = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_NPVHIGH = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_NPVHIGH = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_NPVHIGH = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_NPVHIGH = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_NPVHIGH = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NPVLOW = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NPVLOW = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NPVLOW = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_NPVLOW = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_NPVLOW = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_NPVLOW = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_NPVLOW = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_NPVLOW = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_NPVLOW = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_METHIGH = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_METHIGH = new TObjArray();
-TObjArray* a_HLT_EMu_OR_METHIGH = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_METHIGH = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_METHIGH = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_METHIGH = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_METHIGH = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_METHIGH = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_METHIGH = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_METLOW = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_METLOW = new TObjArray();
-TObjArray* a_HLT_EMu_OR_METLOW = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_METLOW = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_METLOW = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_METLOW = new TObjArray();
 TObjArray* a_DoubleMu_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_DoubleEl_OR__X__allMET_METLOW = new TObjArray();
 TObjArray* a_EMu_OR__X__allMET_METLOW = new TObjArray();
 
-TObjArray* a_HLT_DoubleMu_OR_NMu2 = new TObjArray();
-TObjArray* a_HLT_DoubleEl_OR_NMu2 = new TObjArray();
-TObjArray* a_HLT_EMu_OR_NMu2 = new TObjArray();
-TObjArray* a_DoubleMu_OR__X__allMET_NMu2 = new TObjArray();
-TObjArray* a_DoubleEl_OR__X__allMET_NMu2 = new TObjArray();
-TObjArray* a_EMu_OR__X__allMET_NMu2 = new TObjArray();
+// TObjArray* a_HLT_DoubleMu_OR_ExNumMu0 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumMu0 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumMu0 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu0 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu0 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumMu0 = new TObjArray();
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumMu1 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumMu1 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumMu1 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu1 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu1 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumMu1 = new TObjArray();
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumMu2 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumMu2 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumMu2 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumMu2 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumMu2 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumMu2 = new TObjArray();
+
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumEl0 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumEl0 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumEl0 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumEl0 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumEl0 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumEl0 = new TObjArray();
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumEl1 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumEl1 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumEl1 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumEl1 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumEl1 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumEl1 = new TObjArray();
+
+// TObjArray* a_HLT_DoubleMu_OR_ExNumEl2 = new TObjArray();
+// TObjArray* a_HLT_DoubleEl_OR_ExNumEl2 = new TObjArray();
+// TObjArray* a_HLT_EMu_OR_ExNumEl2 = new TObjArray();
+TObjArray* a_DoubleMu_OR__X__allMET_ExNumEl2 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_ExNumEl2 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_ExNumEl2 = new TObjArray();
+
+TObjArray* a_DoubleMu_OR__X__allMET_DeltaRZone0 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_DeltaRZone0 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_DeltaRZone0 = new TObjArray();
+
+TObjArray* a_DoubleMu_OR__X__allMET_DeltaRZone1 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_DeltaRZone1 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_DeltaRZone1 = new TObjArray();
+
+TObjArray* a_DoubleMu_OR__X__allMET_DeltaRZone2 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_DeltaRZone2 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_DeltaRZone2 = new TObjArray();
+
+TObjArray* a_DoubleMu_OR__X__allMET_DeltaRZone3 = new TObjArray();
+TObjArray* a_DoubleEl_OR__X__allMET_DeltaRZone3 = new TObjArray();
+TObjArray* a_EMu_OR__X__allMET_DeltaRZone3 = new TObjArray();
+
+
+
+
+
+
 
 //Canal Mumu
 TObjArray* a_DoubleMu_OR__X__allMET_NumSum2Fail = new TObjArray();   //Objeto que representa o numerador do N_eff dos eventos que falharam.
