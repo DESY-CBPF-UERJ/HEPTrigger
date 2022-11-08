@@ -1,7 +1,7 @@
 import os
 import Run_conversion as Conv
 
-type = 16
+type = 18
 
 if (type == 16 or type == 'all'):
     #Criando os arquivos.root
@@ -16,57 +16,61 @@ if (type == 16 or type == 'all'):
     # os.system("root -q Conversion_ttbar_2016.C")
     # os.system("root -q Conversion_ttbar_APV_2016.C")
     
-    list_samples_2016 = [
-                    ("Data_MET_C_16_files","_Run2016C"),
-                    ("Data_MET_D_16_files","_Run2016D"),
-                    ("Data_MET_E_16_files","_Run2016E"),
-                    ("Data_MET_F_16_files","_Run2016F_1"),
-                    ("Data_MET_G_16_files","_Run2016G"),
-                    ("Data_MET_H_16_files","_Run2016H"),
-                    ("Data_MET_HIPM_F_16_files","_Run2016F_2"),
-                    ("Data_MET_v1_B_16_files","_Run2016B_1"),
-                    ("Data_MET_v2_B_16_files","_Run2016B_2"),
-                    ("TTTo2L2Nu_16_files","_ttbar"),
-                    ("TTTo2L2Nu_APV_16_files","_ttbarAPV"),
-                    ("WZTo3LNu_16_files","_WZ"),
-                    ("WZTo3LNu_APV_16_files","_WZAPV"),
-                    ("ZZTo4L_16_files","_ZZ"),
-                    ("ZZTo2L2Nu_16_files","_ZZAPV")
-                    ]
-    for x,y in list_samples_2016:
-        Conv.change_template(x,y,"2016")     
+    # list_samples_2016 = [
+    #                 ("Data_MET_C_16_files","_Run2016C"),
+    #                 ("Data_MET_D_16_files","_Run2016D"),
+    #                 ("Data_MET_E_16_files","_Run2016E"),
+    #                 ("Data_MET_F_16_files","_Run2016F_1"),
+    #                 ("Data_MET_G_16_files","_Run2016G"),
+    #                 ("Data_MET_H_16_files","_Run2016H"),
+    #                 ("Data_MET_HIPM_F_16_files","_Run2016F_2"),
+    #                 # ("Data_MET_v1_B_16_files","_Run2016B_1"),
+    #                 ("Data_MET_v2_B_16_files","_Run2016B_2"),
+    #                 ("TTTo2L2Nu_16_files","_ttbar"),
+    #                 ("TTTo2L2Nu_APV_16_files","_ttbarAPV"),
+    #                 ("WZTo3LNu_16_files","_WZ"),
+    #                 ("WZTo3LNu_APV_16_files","_WZAPV"),
+    #                 ("ZZTo4L_16_files","_ZZ"),
+    #                 ("ZZTo2L2Nu_16_files","_ZZAPV")
+    #                 ]
+    # for x,y in list_samples_2016:
+    #     Conv.change_template(x,y,"2016")     
     
-    os.system("hadd -f ../datasets/2016/_Run2016F ../datasets/2016/_Run2016F_1 ../datasets/2016/_Run2016F_2 ")
-    os.system("rm -r ../datasets/2016/_Run2016F_1 ../datasets/2016/_Run2016F_2")
-    os.system("hadd -f ../datasets/2016/_Run2016B ../datasets/2016/_Run2016B_1 ../datasets/2016/_Run2016B_2 ")
-    os.system("rm -r ../datasets/2016/_Run2016B_1 ../datasets/2016/_Run2016B_2")
+    # os.system("hadd -f ../datasets/2016/_Run2016F.root ../datasets/2016/_Run2016F_1.root ../datasets/2016/_Run2016F_2.root ")
+    # os.system("rm -r ../datasets/2016/_Run2016F_1.root ../datasets/2016/_Run2016F_2.root")
+    # os.system("hadd -f ../datasets/2016/_Run2016B.root ../datasets/2016/_Run2016B_2.root ") #../datasets/2016/_Run2016B_1 
+    # os.system("rm -r ../datasets/2016/_Run2016B_1.root ../datasets/2016/_Run2016B_2.root")
     
-    os.system("hadd -f ../datasets/2016/_Run2016Full.root  ../datasets/2016/_Run2016C.root ../datasets/2016/_Run2016D.root ../datasets/2016/_Run2016E.root ../datasets/2016/_Run2016F.root ../datasets/2016/_Run2016G.root ../datasets/2016/_Run2016H.root")
-    os.system("hadd -f ../datasets/2016/_MC2016.root ../datasets/2016/_ttbar.root ../datasets/2016/_ttbarAPV.root ../datasets/2016/_WZ.root ../datasets/2016/_WZAPV.root ../datasets/2016/_ZZ.root ../datasets/2016/_ZZAPV.root")
-    os.system("rm -r  ../datasets/2016/_ttbar.root ../datasets/2016/_ttbarAPV.root ../datasets/2016/_WZ.root ../datasets/2016/_WZAPV.root ../datasets/2016/_ZZ.root ../datasets/2016/_ZZAPV.root")
+    # os.system("hadd -f ../datasets/2016/_Run2016Full.root  ../datasets/2016/_Run2016C.root ../datasets/2016/_Run2016D.root ../datasets/2016/_Run2016E.root ../datasets/2016/_Run2016F.root ../datasets/2016/_Run2016G.root ../datasets/2016/_Run2016H.root")
+    # os.system("hadd -f ../datasets/2016/_MC2016.root ../datasets/2016/_ttbar.root ../datasets/2016/_ttbarAPV.root ../datasets/2016/_WZ.root ../datasets/2016/_WZAPV.root ../datasets/2016/_ZZ.root ../datasets/2016/_ZZAPV.root")
+    # os.system("rm -r  ../datasets/2016/_ttbar.root ../datasets/2016/_ttbarAPV.root ../datasets/2016/_WZ.root ../datasets/2016/_WZAPV.root ../datasets/2016/_ZZ.root ../datasets/2016/_ZZAPV.root")
   
-    os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_Run2016Full.root\", \"true\", 2016)'")
-    os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/\", \"true\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_MC2016.root\", \"true\", 2016)'")
+    # os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_Run2016Full.root\", \"true\", 2016)'")
+    # os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/\", \"true\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_MC2016.root\", \"true\", 2016)'")
 
-    os.system("root -q 'draw_ScaleFactors_systematics.C(\"2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/data/outfile_Run2016Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/MC/outfile_MC2016.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",1,\"\")'")
-    list_varied_SF = ["_NJETSHIGH","_NJETSLOW","_NPVHIGH","_NPVLOW","_METHIGH","_METLOW","_ExNumMu0","_ExNumMu1","_ExNumMu2","_ExNumEl0","_ExNumEl1","_ExNumEl2","_DeltaRZone0","_DeltaRZone1","_DeltaRZone2","_DeltaRZone3"]
-    for x in list_varied_SF:
-        os.system("root -q 'draw_ScaleFactors_systematics.C(\"2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/data/outfile_Run2016Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/MC/outfile_MC2016.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",1,\""+x+"\")'")
+    # os.system("root -q 'draw_ScaleFactors_systematics.C(\"2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/data/outfile_Run2016Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/MC/outfile_MC2016.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",1,\"\")'")
+    # list_varied_SF = ["_NJETSHIGH","_NJETSLOW","_NPVHIGH","_NPVLOW","_METHIGH","_METLOW","_ExNumMu0","_ExNumMu1","_ExNumMu2","_ExNumEl0","_ExNumEl1","_ExNumEl2","_DeltaRZone0","_DeltaRZone1","_DeltaRZone2","_DeltaRZone3"]
+    # for x in list_varied_SF:
+    #     os.system("root -q 'draw_ScaleFactors_systematics.C(\"2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/data/outfile_Run2016Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/MC/outfile_MC2016.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",1,\""+x+"\")'")
 
-    list_eras = ['B','C','D','E','F']
-    for x in list_eras:
-        os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_Run2016"+x+".root\", \"true\", 2016)'")
-        os.system("root -q 'draw_ScaleFactors_systematics.C(\"2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/data/outfile_Run2016"+x+".root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/MC/outfile_MC2016.root\",\""+x+"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",0,\"\")'")
+    # list_eras = ['B','C','D','E','F','G','H']
+    # for x in list_eras:
+    #     os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2016/_Run2016"+x+".root\", \"true\", 2016)'")
+    #     os.system("root -q 'draw_ScaleFactors_systematics.C(\"2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/data/outfile_Run2016"+x+".root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2016/MCPT/MC/outfile_MC2016.root\",\""+x+"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",0,\"\")'")
 
 
-    os.system("root -q 'ScaleFactors_syst_lumi.C(\"2016\")'")
+    # os.system("root -q 'ScaleFactors_syst_lumi.C(\"2016\")'")
 
+
+
+
+    ## COMEÇA A DAR ERRO AQUI
     # # STUDY of NEW REGIONS
-    for x in list_varied_SF:
-        os.system("root -q 'Systematic_regions.C(\""+x+"\",\"2016\")'")
+    # for x in list_varied_SF:
+    #     os.system("root -q 'Systematic_regions.C(\""+x+"\",\"2016\")'")
 
 
-    os.system("root -q '../systCombiner.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",\"2016\")'")
+    # os.system("root -q '../systCombiner.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",\"2016\")'")
 
 
     os.system("root -q '../outputs_and_plotting_script/2016/Writer_SF.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2016/Final_2016_SFs_with_full_systematics/\",\"2016\")'")
@@ -128,46 +132,46 @@ if (type==17 or type == 'all'):
 
 if (type == 18 or type == 'all'):
     
-    list_samples_2018 = [
-                    ("Data_MET_A_18_files","_Run2018A"),
-                    ("Data_MET_B_18_files","_Run2018B"),
-                    ("Data_MET_C_18_files","_Run2018C"),
-                    ("Data_MET_D_18_files","_Run2018D"),
-                    # ("TTTo2L2Nu_18_files","_ttbar"),
-                    # ("DYJetsToLL_HT-Inclusive_18_files","_DY_HT")
-                    # ("DYJetsToLL_Pt-Inclusive_18_files","_DY_PT")
-                    ("WZTo3LNu_18_files","_WZ"),
-                    ("ZZTo2L2Nu_18_files","_ZZ")
-                    ]
-    for x,y in list_samples_2018:
-        Conv.change_template(x,y,"2018")      
+    # list_samples_2018 = [
+    #                 ("Data_MET_A_18_files","_Run2018A"),
+    #                 ("Data_MET_B_18_files","_Run2018B"),
+    #                 ("Data_MET_C_18_files","_Run2018C"),
+    #                 ("Data_MET_D_18_files","_Run2018D"),
+    #                 ("TTTo2L2Nu_18_files","_ttbar"),
+    #                 # ("DYJetsToLL_HT-Inclusive_18_files","_DY_HT")
+    #                 # ("DYJetsToLL_Pt-Inclusive_18_files","_DY_PT")
+    #                 ("WZTo3LNu_18_files","_WZ"),
+    #                 ("ZZTo2L2Nu_18_files","_ZZ")
+    #                 ]
+    # for x,y in list_samples_2018:
+    #     Conv.change_template(x,y,"2018")      
 
 
 
-    os.system("hadd -f ../datasets/2018/_Run2018Full.root ../datasets/2018/_Run2018A.root ../datasets/2018/_Run2018B.root ../datasets/2018/_Run2018C.root ../datasets/2018/_Run2018D.root")
-    os.system("hadd -f ../datasets/2018/_MC2018.root ../datasets/2018/_ttbar.root ../datasets/2018/_WZ.root ../datasets/2018/_ZZ.root")
+    # os.system("hadd -f ../datasets/2018/_Run2018Full.root ../datasets/2018/_Run2018A.root ../datasets/2018/_Run2018B.root ../datasets/2018/_Run2018C.root ../datasets/2018/_Run2018D.root")
+    # os.system("hadd -f ../datasets/2018/_MC2018.root ../datasets/2018/_ttbar.root ../datasets/2018/_WZ.root ../datasets/2018/_ZZ.root")
 
-    os.system("rm ../datasets/2018/_ttbar.root ../datasets/2018/_WZ.root ../datasets/2018/_ZZ.root")
+    # os.system("rm ../datasets/2018/_ttbar.root ../datasets/2018/_WZ.root ../datasets/2018/_ZZ.root")
 
 
-    os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2018/_Run2018Full.root\", \"true\", 2018)'")
-    os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/\", \"true\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2018/_MC2018.root\", \"true\", 2018)'")
+    # os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2018/_Run2018Full.root\", \"true\", 2018)'")
+    # os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/\", \"true\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2018/_MC2018.root\", \"true\", 2018)'")
 
-    os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\"\")'")
-    list_varied_SF = ["_NJETSHIGH","_NJETSLOW","_NPVHIGH","_NPVLOW","_METHIGH","_METLOW","_ExNumMu0","_ExNumMu1","_ExNumMu2","_ExNumEl0","_ExNumEl1","_ExNumEl2","_DeltaRZone0","_DeltaRZone1","_DeltaRZone2","_DeltaRZone3"]
-    for x in list_varied_SF:
-        os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\""+x+"\")'")
+    # os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\"\")'")
+    # list_varied_SF = ["_NJETSHIGH","_NJETSLOW","_NPVHIGH","_NPVLOW","_METHIGH","_METLOW","_ExNumMu0","_ExNumMu1","_ExNumMu2","_ExNumEl0","_ExNumEl1","_ExNumEl2","_DeltaRZone0","_DeltaRZone1","_DeltaRZone2","_DeltaRZone3"]
+    # for x in list_varied_SF:
+    #     os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018Full.root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",1,\""+x+"\")'")
 
-    list_eras = ['A','B','C','D']
-    for x in list_eras:
-        os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2018/_Run2018"+x+".root\", \"true\", 2018)'")
-        os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018"+x+".root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\""+x+"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",0,\"\")'")
+    # list_eras = ['A','B','C','D']
+    # for x in list_eras:
+    #     os.system("root -q '../trigEffStudy.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/\", \"false\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/datasets/2018/_Run2018"+x+".root\", \"true\", 2018)'")
+    #     os.system("root -q 'draw_ScaleFactors_systematics.C(\"2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/data/outfile_Run2018"+x+".root\" ,\"/home/matheus/Desktop/tt-triggerEfficiency-DL/TriggerFiles_2018/MCPT/MC/outfile_MC2018.root\",\""+x+"\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",0,\"\")'")
 
-    os.system("root -q 'ScaleFactors_syst_lumi.C()'")
+    os.system("root -q 'ScaleFactors_syst_lumi.C(\"2018\")'")
 
-    # # STUDY of NEW REGIONS
-    for x in list_varied_SF:
-        os.system("root -q 'Systematic_regions.C(\""+x+"\",\"2018\")'")
+    # # # STUDY of NEW REGIONS
+    # for x in list_varied_SF:
+    #     os.system("root -q 'Systematic_regions.C(\""+x+"\",\"2018\")'")
 
 
 
@@ -176,7 +180,7 @@ if (type == 18 or type == 'all'):
     os.system("root -q '../systCombiner.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",\"2018\")'")
 
 
-    os.system("root -q '../outputs_and_plotting_script/2018/Writer_SF.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/Final_2018_SFs_with_full_systematics/\")'")
+    os.system("root -q '../outputs_and_plotting_script/2018/Writer_SF.C(\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/\",\"/home/matheus/Desktop/tt-triggerEfficiency-DL/outputs_and_plotting_script/2018/Final_2018_SFs_with_full_systematics/\",\"2018\")'")
 
 
 

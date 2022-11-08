@@ -115,55 +115,29 @@ void leptonHandler::applyMuonCuts()
 	//CORREÇÂO DO CODIGO-> Se tivessemos um evento com 1 lepton e 1 muon, ele automaticamente colocava o indeice deles de 0 e 1, quando deveria ser 0 e 0.
 
 	
- 	for (unsigned int l = 0; l < ev->lepton_pt.size(); l++) {
+ 	// for (unsigned int l = 0; l < ev->lepton_pt.size(); l++) {    //OLD WAY
+    		// if ( !(ev->lepton_isMuon[l] == 1) ) continue;        //OLD WAY
 
-    		// Cut 0: is muon
-    		if ( !(ev->lepton_isMuon[l] == 1) ) continue;
-    		//h_mu_cutflow->Fill("Total Muons", 1);
-    		//if (leadIndex_mu == -99)     h_mu_event_cutflow->Fill("Total Muons", 1);
+ 	for (unsigned int l = 0; l < ev->muon_pt.size(); l++) {
 
-    		// Cut 1: pT > 15 GeV --> use SL veto as threshold for counting muons. Apply higher pT cut later
-    		// if ( !(ev->lepton_pt_[l] > 15) ) continue;
-    	//	if ( !(ev->lepton_pt[l] > 20) ) continue;
-    		//h_mu_cutflow->Fill("p_{T} > 15", 1);
-    		//if (leadIndex_mu == -99)     h_mu_event_cutflow->Fill("p_{T} > 15", 1);
-
-    		// Cut 2: |ETA| < 2.4
-    	//	if ( !(abs(ev->lepton_eta[l]) < 2.4) ) continue;
-    		//h_mu_cutflow->Fill("|#eta| < 2.4", 1);
-    		//if (leadIndex_mu == -99)     h_mu_event_cutflow->Fill("|#eta| < 2.4", 1);
-
-    		// Cut 3: tight ID
-    	//	if ( !(ev->lepton_isTight[l] == 1) ) continue;
-    		//h_mu_cutflow->Fill("Tight", 1);
-    		//if (leadIndex_mu == -99)     h_mu_event_cutflow->Fill("Tight", 1);
-
-    		// Cut 4: Isolation < 0.25
-    		// if ( !(ev->lepton_relIso_[l] < 0.25) ) continue;
-    	//	if ( !(ev->lepton_relIso[l] < 0.15) ) continue;
-    		//h_mu_cutflow->Fill("Isolation < 0.25", 1);
-    		//if (leadIndex_mu == -99)     h_mu_event_cutflow->Fill("Isolation < 0.25", 1);
     		nMuons++;
     		if (isDebug)
-      			cout << "\n ev->evt = " << ev->evt << " and muon " << l << " has pt " << ev->lepton_pt[l] << " , eta " << ev->lepton_eta[l] << " , phi " << ev->lepton_phi[l] << " , iso " << ev->lepton_relIso[l] << " , isTight " << ev->lepton_isTight[l] << " , isMuon " << ev->lepton_isMuon[l] << " , charge " << ev->lepton_charge[l] << endl;
-
-		// Cut 5: Trigger
-    		//if ( ev->passHLT_IsoMu27_v_ && leadIndex_mu == -99)     h_mu_event_cutflow->Fill("Trigger", 1);
+      			cout << "\n ev->evt = " << ev->evt << " and muon " << l << " has pt " << ev->muon_pt[l] << endl;
 
 
     		// set leading/subleading indices if appropriate
-    		setLeadSubleadIndices(l, leadIndex_mu, subIndex_mu);
+    		setLeadSubleadIndices(l, leadIndex_mu, subIndex_mu,1);
 			// cout<<"Temos um Leadmuon, com indice:"<<leadIndex_mu<<endl;
 			// cout<<"Temos um Submuon, com indice:"<<subIndex_mu<<endl;
 			// cout<<"==========================================================="<<endl;
 	} // loop over muons
 
   	// *** ?. Wrap-up
-	//cout<<"leadIndex_mu = "<<leadIndex_mu<<endl;
-	//cout<<"nmuons = "<< nMuons<<endl;
+	// cout<<"leadIndex_mu = "<<leadIndex_mu<<endl;
+	// cout<<"nmuons = "<< nMuons<<endl;
   	//h_mu_n->Fill( nMuons );
   	if (leadIndex_mu != -99){
-    		leadPt_mu = ev->lepton_pt[leadIndex_mu];
+    		leadPt_mu = ev->muon_pt[leadIndex_mu];
     		leadEta_mu = ev->lepton_eta[leadIndex_mu];
     		leadRelIso_mu = ev->lepton_relIso[leadIndex_mu];
     		leadCharge_mu = ev->lepton_charge[leadIndex_mu];
@@ -171,7 +145,7 @@ void leptonHandler::applyMuonCuts()
     		leadRecoIsoSF_mu = ev->lepton_recoIsoSF[leadIndex_mu] ;
   	}
   	if (subIndex_mu != -99){
-    		subPt_mu = ev->lepton_pt[subIndex_mu];
+    		subPt_mu = ev->muon_pt[subIndex_mu];
     		subEta_mu = ev->lepton_eta[subIndex_mu];
     		subRelIso_mu = ev->lepton_relIso[subIndex_mu];
     		subCharge_mu = ev->lepton_charge[subIndex_mu];
@@ -198,12 +172,12 @@ void leptonHandler::applyElectronCuts()
   	// bool pass6 = false;
   	// bool pass7 = false;
 
-  	for (unsigned int l = 0; l < ev->lepton_pt.size(); l++) {
+  	for (unsigned int l = 0; l < ev->electron_pt.size(); l++) {
 	    	//if ( ev->lepton_pt_.size() == 0) continue ; // protection against events w/o leptons
 	    	//if ( l > 0) continue ; // only for testing
 
 	     	// Cut 0: Is electron
-	    	if ( !(ev->lepton_isMuon[l] == 0) ) continue;
+	    	// if ( !(ev->lepton_isMuon[l] == 0) ) continue;
 	    	//h_el_cutflow->Fill("Total Electrons", 1);
 	    	//if (!pass0) h_el_event_cutflow->Fill("Total Electrons", 1);
 	  //  	pass0 = true;
@@ -234,8 +208,7 @@ void leptonHandler::applyElectronCuts()
 	  //  	pass4 = true;
 
 	    	if (isDebug)
-	      		cout << "\n ev->evt = " << ev->evt << " and electron " << l << " has pt " << ev->lepton_pt[l] << " , eta " << ev->lepton_eta[l] << " , phi " << ev->lepton_phi[l] << " , iso " << ev->lepton_relIso[l] << " , isTight " << ev->lepton_isTight[l] << " , isMuon " << ev->lepton_isMuon[l] << " , charge " << ev->lepton_charge[l] << endl;
-
+	      		cout << "\n ev->evt = " << ev->evt << " and electron " << l << " has pt " << ev->electron_pt[l]<<endl;
 	    	// Trigger cuts
 	    	// if ( ev->passHLT_Ele35_WPTight_Gsf_v_ ) {
 	      	// 	//if (!pass5) h_el_event_cutflow->Fill("El Trigger", 1);
@@ -257,7 +230,7 @@ void leptonHandler::applyElectronCuts()
 
 
 	    	// set leading/subleading indices if appropriate
-	    	setLeadSubleadIndices(l, leadIndex_el, subIndex_el);
+	    	setLeadSubleadIndices(l, leadIndex_el, subIndex_el,2);
 			// cout<<"Temos um Leadeletron, com indice:"<<leadIndex_el<<endl;
 			// cout<<"Temos um Subeletron, com indice:"<<subIndex_el<<endl;
 			// cout<<"==========================================================="<<endl;
@@ -270,7 +243,7 @@ void leptonHandler::applyElectronCuts()
   	//if (nElectrons == 1 && ev->MET_[0] > 125 && ev->passHLT_Ele35_WPTight_Gsf_v_ && ev->passHLT_PFMET120_PFMHT120_IDTight_v_) h_el_event_cutflow->Fill("==1 Electron AllTrig", 1);
 
   	if (leadIndex_el != -99){
-  			leadPt_el = ev->lepton_pt[leadIndex_el];
+  			leadPt_el = ev->electron_pt[leadIndex_el];
     		leadEta_el = ev->lepton_eta[leadIndex_el];
     		leadRelIso_el = ev->lepton_relIso[leadIndex_el];
     		leadCharge_el = ev->lepton_charge[leadIndex_el];
@@ -279,7 +252,7 @@ void leptonHandler::applyElectronCuts()
   	}
 
   	if (subIndex_el != -99){
-    		subPt_el = ev->lepton_pt[subIndex_el];
+    		subPt_el = ev->electron_pt[subIndex_el];
     		subEta_el = ev->lepton_eta[subIndex_el];
     		subRelIso_el = ev->lepton_relIso[subIndex_el];
     		subCharge_el = ev->lepton_charge[subIndex_el];
@@ -296,28 +269,53 @@ void leptonHandler::applyElectronCuts()
 }
 
 
-void leptonHandler::setLeadSubleadIndices(int l, int& lead, int& sub)
+void leptonHandler::setLeadSubleadIndices(int l, int& lead, int& sub,int type)
 {
 	// *** 0. Temporary variables
-  	float leadPt = (lead == -99) ? -99 : ev->lepton_pt[lead];
-  	float subPt  = (sub == -99) ? -99  : ev->lepton_pt[sub];
+	//lepton_pt
+	if (type == 1){
+  		float leadPt = (lead == -99) ? -99 : ev->muon_pt[lead];
+  		float subPt  = (sub == -99) ? -99  : ev->muon_pt[sub];
 
-  	// *** 1. Set leading lepton if appropriate
-  	if (ev->lepton_pt[l] > leadPt) {
+  		// *** 1. Set leading lepton if appropriate
+  		if (ev->muon_pt[l] > leadPt) {
 
-    	// ** A. If already have first good lepton, set old lead lepton to sub
-    		if (leadPt != -99){
-      			sub = lead;
-    		}
+    		// ** A. If already have first good lepton, set old lead lepton to sub
+    			if (leadPt != -99){
+      				sub = lead;
+    			}
     		// ** B. set new leading lepton to leading
-    		lead = l;
-  	}
-  	else if (ev->lepton_pt[l] < leadPt && ev->lepton_pt[l] > subPt) {
+    			lead = l;
+  		}
+	  	else if (ev->muon_pt[l] < leadPt && ev->muon_pt[l] > subPt) {
 
-  		// ** C. New lepton not greater than leading but greater than sub
-  		sub = l;
-  	}
+  			// ** C. New lepton not greater than leading but greater than sub
+  			sub = l;
+  		}
+	}
+	if (type == 2){
+
+  		float leadPt = (lead == -99) ? -99 : ev->electron_pt[lead];
+  		float subPt  = (sub == -99) ? -99  : ev->electron_pt[sub];
+
+  		// *** 1. Set leading lepton if appropriate
+  		if (ev->electron_pt[l] > leadPt) {
+
+    		// ** A. If already have first good lepton, set old lead lepton to sub
+    			if (leadPt != -99){
+      				sub = lead;
+    			}
+    		// ** B. set new leading lepton to leading
+    			lead = l;
+  		}
+	  	else if (ev->electron_pt[l] < leadPt && ev->electron_pt[l] > subPt) {
+
+  			// ** C. New lepton not greater than leading but greater than sub
+  			sub = l;
+  		}
+	}
 }
+
 
 void leptonHandler::checkCategoryCuts()
 {

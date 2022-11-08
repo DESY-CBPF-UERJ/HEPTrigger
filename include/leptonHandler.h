@@ -110,7 +110,7 @@ class leptonHandler{
       void applyElectronCuts();
       void checkHLTTriggers();
       void checkCategoryCuts();
-      void setLeadSubleadIndices(int l, int& lead, int& sub);
+      void setLeadSubleadIndices(int l, int& lead, int& sub,int type);
       float calculateDileptonMass(int index_lead, int index_sub);
 
       // === Variables === //

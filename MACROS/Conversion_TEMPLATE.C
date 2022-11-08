@@ -189,7 +189,9 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 //convertedTree->Branch("events", "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ", HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ, 8000, 1);			   //Criando um branch chamado "events", onde nele se encontra as variaveis
 
 
-
+  //NEW BRANCHS
+  vector<float>   *v_muon_pt;
+  vector<float>   *v_electron_pt;
   // Declaration of leaf types
     Int_t           nMuon;
     Int_t           nElectron;
@@ -268,14 +270,14 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
    Float_t         MET_Type1xy_phi_;
    Float_t         MET_Type1xy_sync_;
    Float_t         MET_Type1xy_phi_sync_;
-   vector<float>   *lepton_mu0_pt;
-   vector<float>   *lepton_mu0_eta;
-   vector<float>   *lepton_mu1_pt;
-   vector<float>   *lepton_mu1_eta;
-   vector<float>   *lepton_el0_pt;
-   vector<float>   *lepton_el0_eta;
-   vector<float>   *lepton_el1_pt;
-   vector<float>   *lepton_el1_eta;
+//    vector<float>   *lepton_mu0_pt;
+//    vector<float>   *lepton_mu0_eta;
+//    vector<float>   *lepton_mu1_pt;
+//    vector<float>   *lepton_mu1_eta;
+//    vector<float>   *lepton_el0_pt;
+//    vector<float>   *lepton_el0_eta;
+//    vector<float>   *lepton_el1_pt;
+//    vector<float>   *lepton_el1_eta;
 
 
 
@@ -356,14 +358,17 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
    ch1.SetBranchAddress("MET_Type1xy_phi_", &MET_Type1xy_phi_);
    ch1.SetBranchAddress("MET_Type1xy_sync_", &MET_Type1xy_sync_);
    ch1.SetBranchAddress("MET_Type1xy_phi_sync_", &MET_Type1xy_phi_sync_);
-   ch1.SetBranchAddress("lepton_mu0_pt", &lepton_mu0_pt);
-   ch1.SetBranchAddress("lepton_mu0_eta", &lepton_mu0_eta);
-   ch1.SetBranchAddress("lepton_mu1_pt", &lepton_mu1_pt);
-   ch1.SetBranchAddress("lepton_mu1_eta", &lepton_mu1_eta);
-   ch1.SetBranchAddress("lepton_el0_pt", &lepton_el0_pt);
-   ch1.SetBranchAddress("lepton_el0_eta", &lepton_el0_eta);
-   ch1.SetBranchAddress("lepton_el1_pt", &lepton_el1_pt);
-   ch1.SetBranchAddress("lepton_el1_eta", &lepton_el1_eta);
+//    ch1.SetBranchAddress("lepton_mu0_pt", &lepton_mu0_pt);
+//    ch1.SetBranchAddress("lepton_mu0_eta", &lepton_mu0_eta);
+//    ch1.SetBranchAddress("lepton_mu1_pt", &lepton_mu1_pt);
+//    ch1.SetBranchAddress("lepton_mu1_eta", &lepton_mu1_eta);
+//    ch1.SetBranchAddress("lepton_el0_pt", &lepton_el0_pt);
+//    ch1.SetBranchAddress("lepton_el0_eta", &lepton_el0_eta);
+//    ch1.SetBranchAddress("lepton_el1_pt", &lepton_el1_pt);
+//    ch1.SetBranchAddress("lepton_el1_eta", &lepton_el1_eta);
+
+    ch1.SetBranchAddress("muon_pt",&v_muon_pt);
+    ch1.SetBranchAddress("electron_pt",&v_electron_pt);
 
 
    Long64_t n = ch1.GetEntries();
@@ -474,6 +479,11 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 
 
 
+
+//ANTIGA VERSÂO=================================================================================================
+
+
+
             vfloat lepton_pt_2;
 	 	    vfloat lepton_eta_2;
 	  	    vfloat lepton_phi_2;
@@ -490,6 +500,8 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
             vint lepton_isTight_2;
         
 
+
+
             lepton_pt_2.clear();
 	        lepton_eta_2.clear();
 	        lepton_phi_2.clear();
@@ -502,6 +514,7 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	        lepton_isMuon_2.clear();
 	        lepton_isTight_2.clear();
 	        lepton_energyCorr_2.clear();
+
 
             
             for(int i=0;i<lepton_pt_->size();i++){
@@ -535,6 +548,25 @@ TTree *convertedTree = new TTree("convertedTree","convertedTree");		   //Crio um
 	    eve->lepton_recoIsoSF  = lepton_recoIsoSF_2;
 	    eve->lepton_energyCorr  = lepton_energyCorr_2;
 
+//ANTIGA VERSÂO=================================================================================================
+
+//NOVA VERSÂO ==================================================================================================
+
+            vfloat v_muon_pt_2;
+            vfloat v_electron_pt_2;
+
+            v_muon_pt_2.clear();
+            v_electron_pt_2.clear();
+
+            for (int i =0;i<v_muon_pt->size();i++){
+                v_muon_pt_2.push_back(v_muon_pt->at(i));
+            }
+            for (int i =0;i<v_electron_pt->size();i++){
+                v_electron_pt_2.push_back(v_electron_pt->at(i));
+            }
+
+            eve->muon_pt = v_muon_pt_2;
+            eve->electron_pt = v_electron_pt_2;
         // }
 
 		convertedTree->Fill();

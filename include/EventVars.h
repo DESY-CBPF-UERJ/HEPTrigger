@@ -96,6 +96,9 @@ struct EventVars{
   vfloat lepton_recoIsoSF;
   vfloat lepton_energyCorr;
 
+  vfloat muon_pt;
+  vfloat electron_pt;
+
   float genweight;
 
   Float_t MET;
@@ -179,6 +182,13 @@ void EventVars::initialize(){
   genweight = -999.;
 
   LepLep_deltaR = -99.;
+
+
+
+  muon_pt.clear();
+
+  electron_pt.clear();
+
 
   lepton_isMuon.clear();
   lepton_charge.clear();
